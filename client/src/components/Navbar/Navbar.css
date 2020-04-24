@@ -1,0 +1,188 @@
+
+
+@media only screen and (min-width: 1025px) {
+    #logotext{
+        font-size: 18px;
+        font-family: 'Kaushan Script', cursive;
+        position: absolute;
+        top: 53%;
+        right: 73%;
+        /* color: #c6dff4; */
+        color: #c8e6ff;
+
+    }
+
+    #navbartoggler {
+        position: absolute;
+        top: 45%;
+        left: 70%;        
+    }
+
+    .navbar {
+        font-weight: 800;
+        font-size: 16px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: 'Lato', sans-serif;
+
+    }
+
+    #navbarContainer{
+        width: 100%;
+        height: 103px;
+    }
+
+    #logo{
+        width: 100px;
+        height: 80px;
+    }
+
+}
+
+@media only screen and (min-width: 770px) and (max-width: 1024px) {
+    #logotext{
+        font-size: 17px;
+        font-family: 'Kaushan Script', cursive;
+        position: absolute;
+        top: 50%;
+        right: 65%;
+        color: #c8e6ff;
+
+    }
+
+    #navbartoggler {
+        position: absolute;
+        top: 45%;
+        left: 65%;
+    }
+
+    .navbar {
+        font-weight: 800;
+        font-size: 16px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: 'Lato', sans-serif;
+    }
+
+    #navbarContainer{
+        width: 100%;
+        height: 100px;
+    }
+
+    #logo{
+        width: 100px;
+        height: 80px;
+    }
+
+}
+
+@media only screen and (min-width: 415px) and (max-width: 769px) {
+    #logotext{
+        font-size: 15px;
+        font-family: 'Kaushan Script', cursive;
+        position: absolute;
+        top: 55%;
+        right: 57%;
+        color: #c8e6ff;
+
+    }
+
+    #navbartoggler {
+        position: absolute;
+        top: 42%;
+        right: 6%;
+    }
+
+    .navbar {
+        font-weight: 800;
+        font-size: 14px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: 'Lato', sans-serif;
+    }
+
+    #navbarContainer{
+        width: 100%;
+        height: 100px;
+    }
+
+    #logo{
+        width: 100px;
+        height: 80px;
+    }
+
+}
+
+@media only screen and (min-width: 380px) and (max-width: 414px) {
+    #logotext{
+        font-size: 13px;
+        font-family: 'Kaushan Script', cursive;
+        position: relative;
+        margin: 0px;
+        top: 0%;
+        color: #c8e6ff;
+
+    }
+
+
+    .navbar {
+        font-weight: 800;
+        font-size: 13px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: 'Lato', sans-serif;
+    }
+
+    #logo{
+        width: 80px;
+        height: 60px;
+        margin-top: 0px;
+        margin-right: 65px;
+    }
+
+}
+
+@media only screen and (max-width: 379px) {
+
+    #logotext{
+        font-size: 14px;
+        font-family: 'Kaushan Script', cursive;
+        position: relative;
+        margin: 0px;
+        top: 30%;
+        color: #c8e6ff;
+    }
+
+
+    .navbar {
+        font-weight: 800;
+        font-size: 13px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: 'Lato', sans-serif;
+    }
+
+    #logo {
+        width: 100px;
+        height: 80px;
+    }
+}
+
+/*TILT*/
+.tilt {
+    -webkit-transition: all 0.5s ease;
+       -moz-transition: all 0.5s ease;
+         -o-transition: all 0.5s ease;
+        -ms-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+  }
+   
+  .tilt:hover {
+    -webkit-transform: rotate(-10deg);
+       -moz-transform: rotate(-10deg);
+         -o-transform: rotate(-10deg);
+        -ms-transform: rotate(-10deg);
+            transform: rotate(-10deg);
+  }
+
+

@@ -1,0 +1,144 @@
+@media only screen and (min-width: 415px) {
+
+    /* #headerWrapper {
+        background-color:#c6dff4;
+        border-bottom: 5px solid black;
+        height: 100px;
+        width: 100%;
+        padding: 10px;
+        position: absolute;
+        top: 11%;
+    }
+
+    #headerFont {
+        position: relative;
+        top: 10px;
+        font-family: 'Codystar', cursive;
+        font-weight: bold;
+        font-size: 3vw;
+    }
+
+    #headerPFont {
+        position: relative;
+        top: -45px;
+        font-size: 1.2vw;
+    } */
+
+}
+
+@media only screen and (max-width: 414px) {
+    /* #headerWrapper {
+        background-color: #c6dff4;
+        border-bottom: 5px solid black;
+        height: 150px;
+    }
+
+    #headerFont {
+        position: relative;
+        top: -10px;
+        font-family: 'Codystar', cursive;
+        font-weight: bold;
+        font-size: 12vw;
+    }
+
+    #headerPFont {
+        position: relative;
+        top: -10px;
+        font-size: 3.5vw;
+    } */
+}
+
+#headerwrap {
+	background: url(../../assets/img/sunlightphoto.JPG) no-repeat center top;
+	margin-top: 100px;
+	padding-top:20px;
+	text-align:center;
+	background-attachment: relative;
+	background-position: center center;
+	min-height: 500px;
+	width: 100%;
+	
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#headerwrap h1 {
+	margin-top: 100px;
+	color: #1a1b1d;
+	font-size: 70px;
+	font-weight: 300;
+	letter-spacing: 3px;
+}
+
+#headerwrap h2 {
+	color: white;
+	font-size: 40px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+}
+
+/* Dark Grey Wrap */
+#dg {
+	background: #e0e0e0;
+	padding-top: 70px;
+	padding-bottom: 70px;
+	text-align: center;
+}
+
+#dg h4 {
+	font-weight: 700;
+}
+
+/* Light Grey */
+#lg {
+	background: #ebebeb;
+	padding-top: 70px;
+	padding-bottom: 70px;
+	text-align: center;
+}
+
+#lg h4 {
+	font-weight: 700;
+}
+
+
+/* Red Wrap */
+#r {
+	background: #ff7878;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+#r h4 {
+	color: white;
+	font-weight: 700;
+}
+
+#r p {
+	color: white;
+}
+
+/* Blue Wrap */
+
+#blue {
+	background: #3498db;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+#blue h4 {
+	color: white;
+	font-weight: 700;
+}
+
+#blue p {
+	color: white;
+}
