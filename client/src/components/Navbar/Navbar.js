@@ -52,7 +52,7 @@ function Navbar() {
                         </li>
                         <li className="nav-item">
                             <Link
-                                to="/contact"
+                                to="/mypeople"
                                 className={window.location.pathname === "/mypeople" ? "nav-link active" : "nav-link"}
                             >
                                 My People
@@ -60,7 +60,7 @@ function Navbar() {
                         </li>
                         <li className="nav-item">
                             <Link
-                                to="/contact"
+                                to="/myaccount"
                                 className={window.location.pathname === "/myaccount" ? "nav-link active" : "nav-link"}
                             >
                                 My Account

@@ -1,72 +1,38 @@
 import React from "react";
-import Header from "../components/Header/Header";
+import Subsubheader from "../components/Subsubheader/Subsubheader";
 import "./Account.css";
 
 function Account() {
     return (
         <div>
-            <Header h4="This Is The End" p="A Full-Stack Developer with previous banking experience" />
+            <Subsubheader h4="My Account" p="Update your account details" />
 
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-4 offset-sm-1 justify-content-center">
-                        <img id="bio-image" alt="myimage" src="./RPYY.jpg" align="left"
-                            className="img-fluid" />
-                    </div>
-                    <div className="col-sm-6 justify-content-center">
-                        <div className="container">
-                            <div className="row overflow-auto" id="introtext">
-                                <p>
-                                    I'm from Singapore, and I moved to Sydney, Australia in 2019.
-                                </p>
+            <div className="container w">
+                <div className="row centered">
+                    <br />
+                    <br />
 
-                                <p>
-                                    My background is in the banking industry, and in my previous worklife, I used to work closely with our in-house IT teams. What they do behind the scenes intrigued me so I finally signed up for the coding bootcamp to find out for myself the intricacies of coding and I'm really enjoying it so far!
-                                </p>
-                                <p>
-                                    In the short term, I'd love to be able to combine my work experience and the knowledge I'm gaining in full stack development today in a role that allows me to utilise my organizational experience, technical skills and creativity. In the long run, I want to run a business that serves a need in the society, working with great people and enjoying every moment of my work.
-                                </p>
-                            </div>
-                        </div>
+                    <div className="col-lg-4">
+                        <i className="fa fa-upload"></i>
+                        <h4>CONSOLIDATE</h4>
+                        <p>Put all your important documents and last wishes together to make it easier for your loved ones to deal with all that happens after your death.</p>
                     </div>
-                </div>
-                <br/>
-                <div className="row sm-4 justify-content-center">
-                    <div className="col-sm-6" id="pebbstext">
-                        <p>
-                            I have a Chihuahua dog called Pebbles, and she is the sweetest pup I could ever ask for. She's
-                            ferocious with other people and dogs, but that's only because she's terrified of the world and
-                            how much bigger everything else seems to be!
-                        </p>
-                        <p>
-                            We love going on long walks in the park with Pebbles. She has a lot of fun running
-                            in the open field, at times trailing at our feet and at other times, sprinting faster than we ever
-                            could.
-                        </p>
-                        <p>
-                            She loves being in her own little world with us, and we love her to bits. ❤
-                        </p>
+
+                    <div className="col-lg-4">
+                        <i className="fa fa-heart"></i>
+                        <h4>NOMINATE</h4>
+                        <p>Choose the trusted people in your life to deal with your administrative matters.</p>
                     </div>
-                    <div className="col-sm-4">
-                        <img alt="pebbsimage" src="./pebbs2.jpg" id="pebbsimg" className="img-fluid" height="250"
-                            width="300" />
+
+                    <div className="col-lg-4">
+                        <i className="fa fa-lock"></i>
+                        <h4>SECURE</h4>
+                        <p>Your private information is safe and secure with us.</p>
                     </div>
                 </div>
                 <br />
                 <br />
-
             </div>
-            {/* <div className="form-group">
-                &nbsp;
-            </div>
-
-            <div className="form-group">
-                &nbsp;
-            </div>
-
-            <div className="form-group">
-                &nbsp;
-            </div> */}
         </div>
     )
 }

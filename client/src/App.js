@@ -23,7 +23,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/gameover" component={GameOver} />
           <Route exact path="/mypeople" component={MyPeople} />
-          <Route exact path="/account" component={Account} handleFormSubmit={handleFormSubmit}/>
+          <Route exact path="/myaccount" component={Account} handleFormSubmit={handleFormSubmit}/>
         </Wrapper>
         <Footer />
       </div>
