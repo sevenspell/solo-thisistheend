@@ -1,73 +1,116 @@
-@media only screen and (min-width: 415px) {
+@media only screen and (min-width: 1025px) {
   
     #footerfont {
-      position: relative;
       margin-left: 45%;
       color: white;
       font-size: 14px;
-      font-family: 'Codystar', cursive;
+      font-family: 'Kaushan Script', cursive;
       font-weight: bold;
       text-align: center;
     }
 
     #detailslink {
-      font-family: 'Over the Rainbow', cursive; 
-      font-size: 15px;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
       font-weight: bold;
-      padding: 10px 10px 25px 10px;
-      background-color: #c6dff4;
-      text-align: center;
-
+      padding: 5px 10px 15px 10px;
+      color: #c6dff4;
+      text-align: left;
   }
 
-  /* #linkedin{
-    position: relative;
+  #navbarfooter {
+    position: fixed;
     bottom: 0%;
-    right: 0%;
-    margin: 10px;
-    width: 40px;
-    height: auto;
-    }
-
-    #resume{
-    position: relative;
-    bottom: 0%;
-    right: 0%;
-    margin: 10px 0px 10px 10px;
-    width: 40px;
-    height: auto;
-
-    }
-
-    #github{
-    position: relative;
-    bottom: 0%;
-    right: 0%;
-    margin: 10px;
-    width: 40px;
-    height: auto;
-
-    } */
+    background-color: #343a40;
+  }
 }
 
-@media only screen and (max-width: 414px) {
+@media only screen and (min-width: 770px) and (max-width: 1024px) {
+
+  #navbarfooter {
+    position: fixed;
+    bottom: 0%;
+    background-color: #343a40;
+  }
+  
   #footerfont {
-    position: relative;
-    margin-left: 38%;
+    margin-left: 45%;
     color: white;
-    font-size: 10px;
-    font-family: 'Codystar', cursive;
+    font-size: 14px;
+    font-family: 'Kaushan Script', cursive;
     font-weight: bold;
     text-align: center;
   }
 
   #detailslink {
-    font-family: 'Over the Rainbow', cursive; 
-    font-size: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
     font-weight: bold;
-    padding: 10px 20px 20px 20px;
-    background-color: rgb(165,42,42, 0.6);
-    text-align: center;
+    padding: 5px 10px 15px 10px;
+    color: #c6dff4;
+    text-align: left;
 
 }
 }
+
+@media only screen and (min-width: 415px) and (max-width: 769px) {
+
+  #navbarfooter {
+    position: fixed;
+    bottom: 0%;
+    background-color: #343a40;
+
+  }
+
+  #footerfont {
+    margin-left: 38%;
+    color: white;
+    font-size: 12px;
+    font-family: 'Kaushan Script', cursive;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #detailslink {
+    font-family: 'Lato', sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 10px 20px 20px 20px;
+    color: #c6dff4;
+    text-align: left;
+
+}
+}
+
+@media only screen and (max-width: 414px) {
+
+  #navbarfooter {
+    position: fixed;
+    bottom: 0%;
+    background-color: #c6dff4;
+    padding: 10px;
+  }
+
+  #footerfont {
+    margin-left: 35%;
+    color: #343a40;
+    background-color: #c6dff4;
+    font-size: 12px;
+    font-family: 'Kaushan Script', cursive;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #detailslink {
+    /* font-family: 'Lato', sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 0px 10px 30px 20px;
+    color: #c6dff4;
+    text-align: center; */
+    display: none;
+
+}
+}
+
+

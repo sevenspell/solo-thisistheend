@@ -19,11 +19,12 @@ body {
     font-weight: 300;
     font-size: 16px;
     color: #555;
+    overflow-y: scroll;
 
     -webkit-font-smoothing: antialiased;
     -webkit-overflow-scrolling: touch;
     
-    margin-top: 0px;
+    margin-top:70px;
 }
 
 /* Titles */
@@ -46,7 +47,7 @@ p {
 
 /* Links */
 a {
-    color: #f85c37;
+    color: #3e90d3;
     word-wrap: break-word;
 
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -58,7 +59,7 @@ a {
 
 a:hover,
 a:focus {
-    color: #7b7b7b;
+    color: #c45353;
     text-decoration: none;
     outline: 0;
 }
@@ -88,8 +89,8 @@ a:after {
 
 
 
-
 /* 
+
 .App {
   text-align: center;
 }

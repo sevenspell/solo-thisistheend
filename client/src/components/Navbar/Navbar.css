@@ -1,6 +1,6 @@
 
 
-@media only screen and (min-width: 1025px) {
+@media only screen and (min-width: 1188px) {
     #logotext{
         font-size: 18px;
         font-family: 'Kaushan Script', cursive;
@@ -39,7 +39,7 @@
 
 }
 
-@media only screen and (min-width: 770px) and (max-width: 1024px) {
+@media only screen and (min-width: 1017px) and (max-width: 1187px) {
     #logotext{
         font-size: 17px;
         font-family: 'Kaushan Script', cursive;
@@ -59,6 +59,80 @@
     .navbar {
         font-weight: 700;
         font-size: 16px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: 'Lato', sans-serif;
+    }
+
+    #navbarContainer{
+        width: 100%;
+        height: 100px;
+    }
+
+    #logo{
+        width: 100px;
+        height: 80px;
+    }
+
+}
+
+@media only screen and (min-width: 950px) and (max-width: 1016px) {
+    #logotext{
+        font-size: 17px;
+        font-family: 'Kaushan Script', cursive;
+        position: absolute;
+        top: 50%;
+        right: 65%;
+        color: #c8e6ff;
+
+    }
+
+    #navbartoggler {
+        position: absolute;
+        top: 45%;
+        left: 65%;
+    }
+
+    .navbar {
+        font-weight: 700;
+        font-size: 14px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-family: 'Lato', sans-serif;
+    }
+
+    #navbarContainer{
+        width: 100%;
+        height: 100px;
+    }
+
+    #logo{
+        width: 100px;
+        height: 80px;
+    }
+
+}
+
+@media only screen and (min-width: 770px) and (max-width: 949px) {
+    #logotext{
+        font-size: 17px;
+        font-family: 'Kaushan Script', cursive;
+        position: absolute;
+        top: 50%;
+        right: 58%;
+        color: #c8e6ff;
+
+    }
+
+    #navbartoggler {
+        position: absolute;
+        top: 45%;
+        left: 55%;
+    }
+
+    .navbar {
+        font-weight: 700;
+        font-size: 14px;
         padding-top: 15px;
         padding-bottom: 15px;
         font-family: 'Lato', sans-serif;
