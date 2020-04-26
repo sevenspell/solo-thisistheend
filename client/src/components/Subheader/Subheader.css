@@ -1,17 +1,39 @@
 /* Blue Wrap */
 
-#blue1 {
-	background: #3498db;
-	padding-top: 130px;
-    padding-bottom: 0px;
-    text-transform: uppercase;
+@media only screen and (min-width: 415px) {
+	#blue1 {
+		background: #3498db;
+		padding-top: 80px;
+		padding-bottom: 0px;
+		text-transform: uppercase;
+	}
+
+	#blue1 h4 {
+		color: white;
+		font-weight: 500;
+	}
+
+	#blue1 p {
+		color: white;
+		font-size: 14px;
+	}
 }
 
-#blue1 h4 {
-	color: white;
-	font-weight: 500;
-}
+@media only screen and (max-width: 414px) {
+	#blue1 {
+		background: #3498db;
+		padding-top: 100px;
+		padding-bottom: 0px;
+		text-transform: uppercase;
+	}
 
-#blue1 p {
-	color: white;
+	#blue1 h4 {
+		color: white;
+		font-weight: 500;
+	}
+
+	#blue1 p {
+		color: white;
+		font-size: 14px;
+	}
 }
