@@ -3,6 +3,9 @@ import Subsubheader from "../components/Subsubheader/Subsubheader";
 import "./Account.css";
 
 function Account() {
+
+    //call api/account to get info and put info inside JSX
+
     return (
         <div>
             <Subsubheader h4="My Account" p="Update your account details" />

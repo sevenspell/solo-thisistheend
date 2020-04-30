@@ -18,24 +18,11 @@ function Navbar() {
                 <p id="logotext">A Place To Draw Your Full Stop.</p>
                 <div className="collapse navbar-collapse" id="navbartoggler">
                     <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                        {/* <li className="nav-item">
-                            <Link
-                                to="/"
-                                className={
-                                    // window.location.pathname === "/" || 
-                                    window.location.pathname === "/"
-                                        ? "nav-link active"
-                                        : "nav-link"
-                                }>
-                                About
-                        </Link>
-                        </li> */}
                         <li className="nav-item">
                             <Link
                                 to="/"
                                 className={
-                                    // window.location.pathname === "/" || 
-                                    window.location.pathname === "/home"
+                                    window.location.pathname === "/"
                                         ? "nav-link active"
                                         : "nav-link"
                                 }>
@@ -64,6 +51,14 @@ function Navbar() {
                                 className={window.location.pathname === "/myaccount" ? "nav-link active" : "nav-link"}
                             >
                                 My Account
+                        </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                to="/logout"
+                                className={window.location.pathname === "/logout" ? "nav-link active" : "nav-link"}
+                            >   
+                                <button id="logoutbtn">Logout  <i className="fa fa-sign-out" id="logoutlogo" aria-hidden="true"></i></button>
                         </Link>
                         </li>
                     </ul>
