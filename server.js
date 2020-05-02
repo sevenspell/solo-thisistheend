@@ -10,6 +10,8 @@ const app = express();
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const path = require("path");
+const URI = require("./config/index");
+
 
 // Route requires
 const userRoutes = require('./routes/userRoutes');
@@ -39,8 +41,10 @@ if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "./client")));
 }
 
+
+
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/solo-thisistheend");
+mongoose.connect(process.env.MONGODB_URI || URI || "mongodb://localhost/solo-thisistheend");
 
 
 // Sessions

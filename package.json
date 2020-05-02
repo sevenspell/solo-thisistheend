@@ -2,6 +2,9 @@
   "name": "solo-thisistheend",
   "version": "1.0.0",
   "description": "solo project - This Is The End",
+  "engines": {
+    "node": "12.14.1"
+  },
   "main": "server.js",
   "dependencies": {
     "axios": "^0.19.2",
