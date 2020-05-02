@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const app = express();
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
+const path = require("path");
 
 // Route requires
 const userRoutes = require('./routes/userRoutes');
@@ -33,9 +34,9 @@ app.use(fileUpload());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("./client/build"));
+  app.use(express.static(path.join(__dirname, "./client")));
 } else {
-	app.use(express.static("./client/public"));
+	app.use(express.static(path.join(__dirname, "./client")));
 }
 
 // Connect to the Mongo DB
@@ -63,7 +64,7 @@ app.use("/api/users", userRoutes);
 app.use("/api", fileRoutes);
 
 app.get("*", function(req, res) {
-	res.sendFile(path.join(__dirname, "./client/build"));
+	res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });
 
 // Starting Server 
