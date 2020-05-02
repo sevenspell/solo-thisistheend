@@ -11,8 +11,6 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const path = require("path");
 
-
-
 // Route requires
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes.js')
@@ -36,7 +34,7 @@ app.use(fileUpload());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(__dirname, "./client/build"));
+  app.use(express.static(path.join(__dirname, "./client")));
 } else {
 	app.use(express.static(path.join(__dirname, "./client")));
 }
