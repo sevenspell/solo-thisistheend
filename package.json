@@ -10,6 +10,7 @@
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.3",
     "express-session": "^1.17.1",
     "if-env": "^1.0.4",
     "mongodb": "^3.5.6",
@@ -36,7 +37,8 @@
     "seed": "node scripts/seedDB.js",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -48,6 +50,4 @@
     "url": "https://github.com/sevenspell/solo-thisistheend/issues"
   },
   "homepage": "https://github.com/sevenspell/solo-thisistheend#readme"
-
-  
 }

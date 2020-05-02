@@ -7,12 +7,20 @@ const MongoStore = require('connect-mongo')(session)
 const passport = require('./passport');
 const mongoose = require('mongoose');
 const app = express();
+const fileUpload = require('express-fileupload');
 const cors = require('cors');
 
 // Route requires
 const userRoutes = require('./routes/userRoutes');
+const fileRoutes = require('./routes/fileRoutes.js')
 
-// MIDDLEWARE
+const PORT = process.env.PORT || 3001;
+
+// Define middleware here
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use(
 	bodyParser.urlencoded({
@@ -20,21 +28,15 @@ app.use(
 	})
 )
 
-app.use(cors());
-app.use(bodyParser.json())
+//Express-fileupload default options
+app.use(fileUpload());
 
-const PORT = process.env.PORT || 3001;
-
-// Define middleware here
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 } else {
 	app.use(express.static("client/public"));
 }
-
 
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/solo-thisistheend");
@@ -58,6 +60,7 @@ app.use(passport.session()) // calls the deserializeUser
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api", fileRoutes);
 
 app.get("*", function(req, res) {
 	res.sendFile(path.join(__dirname, "./client/build/index.html"));
