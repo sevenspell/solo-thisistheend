@@ -4,6 +4,7 @@ import "./GameOver.css";
 
 function GameOver() {
     const inputRef = useRef();
+    var uploadRef = useRef();
 
     // const [items, dispatch] = useReducer((state, action) => {
     //     switch (action.type) {
@@ -25,14 +26,10 @@ function GameOver() {
     //     }
     //   }, []);
 
-    function uploadFile(e) {
-        e.preventDefault();
-        console.log("file upload working")
-    }
 
-    const openBrowser = e => {
-        e.preventDefault();
-        uploadFile();
+
+    const openBrowser = () => {
+        uploadRef.click();
         console.log("browser is working")
     }
 
@@ -58,7 +55,7 @@ function GameOver() {
                                 <i className="fa fa-file-text uploadIcon" data-fa-transform="shrink-2 up-4"></i>
                                 <i className="fa fa-file-pdf-o uploadIcon" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
                             </div>
-                            <input type="file" id="file-upload" name="sampleFile" onClick={uploadFile} />
+                            <input type="file" id="file-upload" name="sampleFile" ref={ref => uploadRef = ref}  />
                             <p id="findtext">Drag and drop files here, or
                                 <a href="#" id="file-browser" onClick={openBrowser}> browse</a> your computer.</p>
                         </div>
