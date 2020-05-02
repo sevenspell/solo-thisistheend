@@ -1,8 +1,5 @@
 import React from "react";
 
-const userLoginContext = React.createContext({
-  loggedIn: false,
-  loggedInUsername: null
-});
+const UserLoginContext = React.createContext();
 
-export default userLoginContext;
+export default UserLoginContext;

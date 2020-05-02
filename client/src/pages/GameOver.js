@@ -1,37 +1,71 @@
-import React from "react";
+import React, { useReducer, useRef }  from "react";
 import Subheader from "../components/Subheader/Subheader";
 import "./GameOver.css";
 
 function GameOver() {
+    const inputRef = useRef();
+
+    // const [items, dispatch] = useReducer((state, action) => {
+    //     switch (action.type) {
+    //     case "add":
+    //       return [
+    //         ...state,
+    //         {
+    //           id: state.length * Math.random(),
+    //           name: action.name
+    //         }
+    //       ];
+    //       // Bonus: Remove a todo from the list.
+    //     case "remove":
+    //       return state.filter((_, index) => {
+    //         return index !== action.index;
+    //       });
+    //     default:
+    //       return state;
+    //     }
+    //   }, []);
+
+    function uploadFile(e) {
+        e.preventDefault();
+        console.log("file upload working")
+    }
+
+    const openBrowser = e => {
+        e.preventDefault();
+        uploadFile();
+        console.log("browser is working")
+    }
+
+
     return (
         <div>
             <Subheader h4="Game Over" p="Consolidate important documents and last wishes for when your game is over" />
 
-            <div className="container w">
-                <div className="row centered">
-                    <br />
-                    <br />
-
-                    <div className="col-lg-4">
-                        <i className="fa fa-upload"></i>
-                        <h4>CONSOLIDATE</h4>
-                        <p>Put all your important documents and last wishes together to make it easier for your loved ones to deal with all that happens after your death.</p>
+            <div className="wrapperupload">
+                <div className="containerupload">
+                    <h1>Upload a file</h1>
+                    <form 
+                        ref={inputRef} 
+                        id='uploadForm'
+                        action='http://localhost:3000/api/upload'
+                        method='post'
+                        encType="multipart/form-data">                  
+                    
+                    <div className="upload-container">
+                        <div className="border-container">
+                            <div className="icons fa-4x">
+                                <i className="fa fa-file-image-o uploadIcon" data-fa-transform="shrink-3 down-2 left-6 rotate--30"></i>
+                                <i className="fa fa-file-text uploadIcon" data-fa-transform="shrink-2 up-4"></i>
+                                <i className="fa fa-file-pdf-o uploadIcon" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+                            </div>
+                            <input type="file" id="file-upload" name="sampleFile" onClick={uploadFile} />
+                            <p id="findtext">Drag and drop files here, or
+                                <a href="#" id="file-browser" onClick={openBrowser}> browse</a> your computer.</p>
+                        </div>
                     </div>
-
-                    <div className="col-lg-4">
-                        <i className="fa fa-heart"></i>
-                        <h4>NOMINATE</h4>
-                        <p>Choose the trusted people in your life to deal with your administrative matters.</p>
-                    </div>
-
-                    <div className="col-lg-4">
-                        <i className="fa fa-lock"></i>
-                        <h4>SECURE</h4>
-                        <p>Your private information is safe and secure with us.</p>
-                    </div>
+                    <input type='submit' value='Upload!' />
+                    </form>
                 </div>
-                <br />
-                <br />
             </div>
         </div>
     )

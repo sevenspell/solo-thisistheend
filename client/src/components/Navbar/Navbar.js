@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import axios from 'axios';
+import { useHistory } from 'react-router';
+import UserLoginContext from "../../utils/userLoginContext";
 
 function Navbar() {
+
+    const {user, setUser} = useContext(UserLoginContext);
+
+    const history = useHistory();
+
+    const logout = e => {
+        e.preventDefault();
+
+        axios.get('/api/users/logout').then((res) => {
+
+            if (res.data.success) {
+                setUser(null);
+                history.push("/");
+            }
+        })
+    }
 
     return (
         <div>
@@ -53,14 +72,17 @@ function Navbar() {
                                 My Account
                         </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link
-                                to="/logout"
-                                className={window.location.pathname === "/logout" ? "nav-link active" : "nav-link"}
-                            >   
-                                <button id="logoutbtn">Logout  <i className="fa fa-sign-out" id="logoutlogo" aria-hidden="true"></i></button>
-                        </Link>
-                        </li>
+                        {
+                            user 
+                            ? 
+                            <li className="nav-item">
+                               
+                            <button id="logoutbtn" onClick={logout}>Logout  <i className="fa fa-sign-out" id="logoutlogo" aria-hidden="true"></i></button>
+                            </li>
+                            : 
+                            <li></li>
+                        }
+
                     </ul>
                 </div>
             </nav>

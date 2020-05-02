@@ -1,45 +1,36 @@
 // import React from "react";
 import Header from "../components/Header/Header";
 import "./Home.css";
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
+import { useHistory } from 'react-router'; 
+import UserLoginContext from "../utils/userLoginContext";
 
 function Home() {
 
-	const [users, setUsers] = useState(null);
+	const history = useHistory();
+
+	const { user, setUser } = useContext(UserLoginContext);
 
 	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	// useEffect(() => {
-	// 	axios
-	// 		.get("/api/account")
-	// 		.then((users) => setUsers(users))
-	// 		.catch((err) => console.log(err));
-	// }, []);
 
-	function submitForm() {
-		if (username === "") {
-			alert("Username is missing");
-			return;
-		}
-		if (password === "") {
-			alert("Password is missing");
-			return;
-		}
-		axios
-			.post("/api/account", {
-				username: username,
-				email: email,
-			})
-			.then(function () {
-				alert("Account created successfully");
-				window.location.reload();
-			})
-			.catch(function () {
-				alert("Could not create account. Please try again");
-			});
+    const submitForm = e => {
+        e.preventDefault();
+
+        axios.post('/api/users/login', {
+            username: username,
+            password: password
+        }).then((res) => {
+            if(res.data.success){
+				setUser(res.data)
+				history.push("/gameover");
+				console.log(res.data.mes)
+				console.log(res.data.id)
+            }
+		})
+		
 	}
 
 	return (
