@@ -10,11 +10,13 @@ const path = require("path");
 const app = express();
 const cors = require('cors');
 
+// Get configuration from .env
 require('dotenv').config()
 
 // Route required
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes.js')
+const nomineeRoutes = require('./routes/nomineeRoutes')
 
 //Specify ports
 const PORT = process.env.PORT || 3001;
@@ -64,6 +66,7 @@ app.use(passport.session()) // calls the deserializeUser
 // Define routes
 app.use("/api/users", userRoutes);
 app.use("/api", fileRoutes);
+app.use("/api", nomineeRoutes);
 
 app.get("*", function(req, res) {
 	res.sendFile(path.join(__dirname, "./client/build/index.html"));

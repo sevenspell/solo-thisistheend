@@ -93,7 +93,7 @@ function GameOver() {
             <div className="wrapperuploaded">
                 <h5 id="uploadHeader">Your Uploaded Files</h5>
                 <ul className="list-group" id="uploadedList">
-                    <li className="list-group-item groupbox">This is a info list group item</li>
+                    <li className="list-group-item groupbox">file.jpg <button className="deletebtn"><i className="fa fa-minus" aria-hidden="true"></i></button></li> 
                 </ul>
             </div>
             <div className="wrapperupload">
