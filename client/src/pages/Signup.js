@@ -1,7 +1,7 @@
 // import React from "react";
 import Header from "../components/Header/Header";
 import "./Signup.css";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import { Redirect, Link } from 'react-router-dom';
 import { useHistory } from 'react-router';  
 import axios from 'axios';

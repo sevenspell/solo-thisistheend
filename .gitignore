@@ -1,1 +1,4 @@
 node_modules
+.env
+
+//heroku local -e .env -p 3001

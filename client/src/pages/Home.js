@@ -1,7 +1,7 @@
 // import React from "react";
 import Header from "../components/Header/Header";
 import "./Home.css";
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router'; 
 import UserLoginContext from "../utils/userLoginContext";

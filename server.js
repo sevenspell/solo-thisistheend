@@ -6,15 +6,17 @@ const dbConnection = require('./database') ;
 const MongoStore = require('connect-mongo')(session)
 const passport = require('./passport');
 const mongoose = require('mongoose');
-const app = express();
-const fileUpload = require('express-fileupload');
-const cors = require('cors');
 const path = require("path");
+const app = express();
+const cors = require('cors');
 
-// Route requires
+require('dotenv').config()
+
+// Route required
 const userRoutes = require('./routes/userRoutes');
 const fileRoutes = require('./routes/fileRoutes.js')
 
+//Specify ports
 const PORT = process.env.PORT || 3001;
 
 // Define middleware here
@@ -23,14 +25,13 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json())
 app.use(morgan('dev'))
+app.engine('html', require('ejs').renderFile);
 app.use(
 	bodyParser.urlencoded({
 		extended: false
 	})
 )
 
-//Express-fileupload default options
-app.use(fileUpload());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
@@ -60,13 +61,14 @@ app.use(passport.initialize())
 app.use(passport.session()) // calls the deserializeUser
 
 
-// Routes
+// Define routes
 app.use("/api/users", userRoutes);
 app.use("/api", fileRoutes);
 
 app.get("*", function(req, res) {
 	res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });
+
 
 // Starting Server 
 app.listen(PORT, () => {

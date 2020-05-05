@@ -1,29 +1,33 @@
-const express = require('express')
-const router = express.Router()
-// const User = require('../database/models/user')
-// const passport = require('../passport')
-// var bcrypt = require('bcryptjs')
-const cors = require('cors')
-
+const express = require('express');
+const router = express.Router();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const uploadFile = require('../service/fileRoutes');
+const formidable = require('express-formidable');
+require('dotenv').config();
 router.use(cors());
+router.use(bodyParser.json());
+
+router.use(formidable());
 
 // file upload route for gameover page
-router.post('/upload', function(req, res) {
-    if (!req.files) {
-      return res.status(400).send('No files were uploaded.');
-    }
-  
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let uploadedFile = req.files.uploadedFile;
-  
-    // Use the mv() method to place the file somewhere on your server
-    uploadedFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
-      if (err)
-        return res.status(500).send(err);
-  
-      res.send('File uploaded!');
-    });
-  });
+router.post('/upload', function (req, res) {
+    const filename = req.files.file.name
+    const filepath = req.files.file.path
+     
+    uploadFile(filepath, filename)
+
+    // else if (data.Location){
+    //     res.json({
+    //         success: true,
+    //         mes: `file uploaded to AWS S3 at ${data.Location}`
+    //       })
+    // }
+})
+
+router.get('/upload', function (req, res) {
+    
+})
 
 
-module.exports = router
+module.exports = router;
