@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
-import { useHistory } from 'react-router';  
+import React, { useRef, useState, useCallback } from "react";
+import { useHistory } from 'react-router';
+import Dropzone, { useDropzone } from "react-dropzone";
 import Subheader from "../components/Subheader/Subheader";
 import "./GameOver.css";
 import axios from "axios"
@@ -33,6 +34,17 @@ function GameOver() {
     const [filename, setFilename] = useState();
     const [filelist, setFilelist] = useState();
 
+    const onDrop = useCallback(acceptedFiles => {
+
+        console.log(acceptedFiles[0])
+        setFile(acceptedFiles[0])
+        setFilename(acceptedFiles[0].name)
+
+      }, [file])
+
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop});
+
     const openBrowser = () => {
         uploadRef.click();
     }
@@ -48,6 +60,7 @@ function GameOver() {
         setFileCategory(e.target.value)
     }
 
+    // Upload file function
     const onClickHandler = (e) => {
         e.preventDefault();
         console.log(fileCategory)
@@ -74,16 +87,18 @@ function GameOver() {
         })
     }
 
+
+
     const getStorageData = (e) => {
         e.preventDefault();
 
         axios.get('/api/upload')
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
     }
 
@@ -93,7 +108,7 @@ function GameOver() {
             <div className="wrapperuploaded">
                 <h5 id="uploadHeader">Your Uploaded Files</h5>
                 <ul className="list-group" id="uploadedList">
-                    <li className="list-group-item groupbox">file.jpg <button className="deletebtn"><i className="fa fa-minus" aria-hidden="true"></i></button></li> 
+                    <li className="list-group-item groupbox">file.jpg <button className="deletebtn"><i className="fa fa-minus" aria-hidden="true"></i></button></li>
                 </ul>
             </div>
             <div className="wrapperupload">
@@ -106,24 +121,25 @@ function GameOver() {
                         method='post'
                         encType="multipart/form-data">
                         {/* > */}
-                        {/* <input type="hidden" id="fileupload-url" name="fileupload-url" ref={ref => uploadRef = ref}></input> */}
-                        <div className="upload-container">
-                            <div className="border-container">
-                                <div className="icons fa-4x">
-                                    <i className="fa fa-file-image-o uploadIcon" data-fa-transform="shrink-3 down-2 left-6 rotate--30"></i>
-                                    <i className="fa fa-file-text uploadIcon" data-fa-transform="shrink-2 up-4"></i>
-                                    <i className="fa fa-file-pdf-o uploadIcon" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
-                                </div>
-                                <input type="file" name="file" id="file-upload" ref={ref => uploadRef = ref} onChange={onChangeHandler} />
-                                <p id="findtext">Drag and drop files here, or
+                        <div {...getRootProps()}>                           
+                            <div id="upload-container">
+                                <div className="border-container">
+                                    <div className="icons fa-4x">
+                                        <i className="fa fa-file-image-o uploadIcon" data-fa-transform="shrink-3 down-2 left-6 rotate--30"></i>
+                                        <i className="fa fa-file-text uploadIcon" data-fa-transform="shrink-2 up-4"></i>
+                                        <i className="fa fa-file-pdf-o uploadIcon" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+                                    </div>
+                                    <input {...getInputProps()} onChange={onChangeHandler}/>
+                                    <input type="file" name="file" id="file-upload" ref={ref => uploadRef = ref} onChange={onChangeHandler} />
+                                    <p id="findtext">Drag and drop files here, or
                                 <a href="#" id="file-browser" onClick={openBrowser}> browse</a> your computer.</p>
+                                </div>
                             </div>
                         </div>
-                        <p id="uploadinstructions">Selected File:</p>
-                        {/* <input type='text' placeholder='File Category' ref={ref => fileLabelRef = ref} onChange={fileCategoryChange} id="filelabel" className="uploadbox" /> */}
-                        <p type="text" id="filenamedisplay">{filename}</p>
-                        {/* <input type='submit' value='Upload File' id="uploadbtn" className="uploadbox" /> */}
 
+                        <p id="uploadinstructions">Selected File:</p>
+                        <p type="text" id="filenamedisplay">{filename}</p>
+   
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <button className="btn btn-outline-secondary" type="submit" id="uploadbtn">Upload File</button>
