@@ -79,9 +79,10 @@ function GameOver() {
                 'Content-Type': `multipart/form-data'; boundary=${formData._boundary}`
             }
         }).then((res, err) => { // then print response status
-            if (err) console.log("omg " + res.send(err))
-            console.log(res + " line 69")
-            if (res.dataMes.success) {
+            if (err) throw (err)
+
+            if (res.data.success) {
+                console.log("file upload is successful")
                 history.push("/gameover");
             }
         })

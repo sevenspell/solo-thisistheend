@@ -14,19 +14,13 @@ router.use(formidable());
 router.post('/upload', function (req, res) {
     const filename = req.files.file.name
     const filepath = req.files.file.path
-     
-    uploadFile(filepath, filename)
 
-    // else if (data.Location){
-    //     res.json({
-    //         success: true,
-    //         mes: `file uploaded to AWS S3 at ${data.Location}`
-    //       })
-    // }
+    uploadFile (filepath, filename, res);
+
 })
 
 router.get('/upload', function (req, res) {
-    
+
 })
 
 

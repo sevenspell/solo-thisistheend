@@ -11,7 +11,8 @@ const s3 = new AWS.S3({
 });
 
 
-const uploadFile = (pathname, filename) => {
+const uploadFile = (pathname, filename, res) => {
+
     // Read content from the file
     let fileContent = fs.readFileSync(path.resolve(pathname));
 
@@ -24,17 +25,16 @@ const uploadFile = (pathname, filename) => {
     };
 
     // Uploading files to the bucket
-    s3.upload(params, function(err, data) {
+    s3.upload(params, function (err, data) {
         if (err) {
-            throw err;
-        } 
-        else if (data.Location){
+            res.json({ err: err })
+        }
+        else if (data.Location) {
             console.log(`File uploaded successfully. ${data.Location}`);
-            return dataMes = { success:true }
-            // return data.json({
-            //     success: true,
-            //     mes: `file uploaded to AWS S3 at ${data.Location}`
-            //   })
+            return res.json({
+                success: true,
+                mes: `file uploaded to AWS S3 at ${data.Location}`
+            })
         }
     });
 };
