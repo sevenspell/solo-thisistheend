@@ -17,11 +17,13 @@ router.post('/upload', function (req, res) {
 
     uploadFile (filepath, filename, res);
 
-})
-
-router.get('/upload', function (req, res) {
+    // File.Create()
 
 })
+
+// router.get('/upload', function (req, res) {
+
+// })
 
 
 module.exports = router;

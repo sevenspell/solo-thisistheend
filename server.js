@@ -66,7 +66,7 @@ app.use(passport.session()) // calls the deserializeUser
 // Define routes
 app.use("/api/users", userRoutes);
 app.use("/api", fileRoutes);
-app.use("/api", nomineeRoutes);
+app.use("/api/nominees", nomineeRoutes);
 
 app.get("*", function(req, res) {
 	res.sendFile(path.join(__dirname, "./client/build/index.html"));

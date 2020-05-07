@@ -1,6 +1,6 @@
 import React, { useRef, useState, useCallback } from "react";
 import { useHistory } from 'react-router';
-import Dropzone, { useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 import Subheader from "../components/Subheader/Subheader";
 import "./GameOver.css";
 import axios from "axios"
@@ -40,10 +40,10 @@ function GameOver() {
         setFile(acceptedFiles[0])
         setFilename(acceptedFiles[0].name)
 
-      }, [file])
+    }, [file])
 
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop});
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     const openBrowser = () => {
         uploadRef.click();
@@ -107,14 +107,14 @@ function GameOver() {
         <div>
             <Subheader h4="Game Over" p="Consolidate important documents and last wishes for when your game is over" />
             <div className="wrapperuploaded">
-                <h5 id="uploadHeader">Your Uploaded Files</h5>
+                <h3 id="uploadListHeader">Your Uploaded Files</h3>
                 <ul className="list-group" id="uploadedList">
-                    <li className="list-group-item groupbox">file.jpg <button className="deletebtn"><i className="fa fa-minus" aria-hidden="true"></i></button></li>
+                    <li className="list-group-item groupbox">file.jpg <button className="deletebtn1"><i className="fa fa-trash" aria-hidden="true"></i></button></li>
                 </ul>
             </div>
             <div className="wrapperupload">
                 <div className="containerupload">
-                    <h1>Upload a file</h1>
+                    <h3 id="uploadHeader">Upload a file</h3>
                     <form
                         onSubmit={onClickHandler}
                         id='uploadForm'
@@ -122,16 +122,18 @@ function GameOver() {
                         method='post'
                         encType="multipart/form-data">
                         {/* > */}
-                        <div {...getRootProps()}>                           
+                        <div {...getRootProps()}>
+                        {/* <input {...getInputProps()} onChange={onChangeHandler} /> */}
                             <div id="upload-container">
+                            
                                 <div className="border-container">
                                     <div className="icons fa-4x">
                                         <i className="fa fa-file-image-o uploadIcon" data-fa-transform="shrink-3 down-2 left-6 rotate--30"></i>
                                         <i className="fa fa-file-text uploadIcon" data-fa-transform="shrink-2 up-4"></i>
                                         <i className="fa fa-file-pdf-o uploadIcon" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
                                     </div>
-                                    <input {...getInputProps()} onChange={onChangeHandler}/>
-                                    <input type="file" name="file" id="file-upload" ref={ref => uploadRef = ref} onChange={onChangeHandler} />
+                                    
+                                    <input {...getInputProps()} type="file" name="file" id="file-upload" ref={ref => uploadRef = ref} onChange={onChangeHandler} />
                                     <p id="findtext">Drag and drop files here, or
                                 <a href="#" id="file-browser" onClick={openBrowser}> browse</a> your computer.</p>
                                 </div>
@@ -140,7 +142,7 @@ function GameOver() {
 
                         <p id="uploadinstructions">Selected File:</p>
                         <p type="text" id="filenamedisplay">{filename}</p>
-   
+
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <button className="btn btn-outline-secondary" type="submit" id="uploadbtn">Upload File</button>
@@ -157,11 +159,14 @@ function GameOver() {
                         </div>
                     </form>
                     <br />
-                    <br />
-                    <br />
-                    <br />
                 </div>
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
         </div>
     )
 }

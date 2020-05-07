@@ -1,0 +1,51 @@
+.formLabel{
+    text-align: left;
+}
+
+#nomineeListHeader{
+    margin: 20px;
+}
+
+#nomineeHeader{
+    margin: 20px;
+}
+
+#nomineeBtn{
+    background-color: #3498db;
+    color: white;
+    font-family: 'Lato', sans-serif; 
+    letter-spacing: 1px;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.deletebtn{
+    border-radius: 10px;
+    /* background-color: rgb(239, 239, 239); */
+    /* background-color: #c8e6ff; */
+    width: 80px;
+    position: sticky;
+    top: 50%;
+    left: 40%;
+    color: #95afc0;
+    background-color: white;
+}
+
+.nomineeItem{
+    font-family: 'Lato', sans-serif; 
+    letter-spacing: 0.5px;
+    width: auto;   
+    font-size: 14px;
+    padding: 20px;
+}
+
+.listDesign{
+    font-family: 'Lato', sans-serif; 
+}
+
+.form-control{
+    font-family: 'Lato', sans-serif; 
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    padding: 20px;
+}
