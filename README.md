@@ -29,9 +29,6 @@ For future enhancements:
 ++ Only after all Nominees have verified would uploaded files be made visible to  them according to tags.
 
 
-
-This front-end client-side only application was built using React, React Components, useState, and JSX amongst other React functionalities.
-
 ## Technology Used
 + Framework: Mongoose, Express, React, Node.js (MERN Stack)
 + Design: Bootstrap CSS
@@ -53,21 +50,21 @@ This front-end client-side only application was built using React, React Compone
 5. It will show a list of already uploaded files.
 <img src="screenshots/screenshot5.png" width= "500" >
 6. Click on 'browse' to select a file or just drag and drop a file into the box. Then select a category and click on 'Upload File' button.
-<img src="screenshots/sceenshot6.png" width= "500" >
+<img src="screenshots/screenshot6.png" width= "500" >
 7. As a user, you won't be able to see this but the file will be uploaded onto the AWS S3 cloud storage.
-<img src="screenshots/sceenshot7.png" width= "500" >
+<img src="screenshots/screenshot7.png" width= "500" >
 8. Next, go to 'mypeople' page. This is for you to enter details of trusted people you want to select as Nominees. It will show you a list of Nominees you have already entered.
-<img src="screenshots/sceenshot8.png" width= "500" >
+<img src="screenshots/screenshot8.png" width= "500" >
 9. Scroll down to enter another Nominee and click on the 'Submit' button.
-<img src="screenshots/sceenshot9.png" width= "500" >
+<img src="screenshots/screenshot9.png" width= "500" >
 10. It will update the Nomination List on top.
-<img src="screenshots/sceenshot10.png" width= "500" >
+<img src="screenshots/screenshot10.png" width= "500" >
 11. You can also delete any of the Nominees by clicking on the 'trash can' button and the Nomination List will be updated.
-<img src="screenshots/sceenshot11.png" width= "500" >
+<img src="screenshots/screenshot11.png" width= "500" >
 12. Go to 'myaccount' page, and you will see your account details. You can choose to change username or password.
-<img src="screenshots/sceenshot12.png" width= "500" >
+<img src="screenshots/screenshot12.png" width= "500" >
 13. Click on the 'logout' button once you're done and it will bring you back to the home page.
-<img src="screenshots/sceenshot13.png" width= "500" >
+<img src="screenshots/screenshot13.png" width= "500" >
 
 
 
