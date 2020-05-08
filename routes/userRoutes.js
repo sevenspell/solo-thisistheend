@@ -125,23 +125,28 @@ router.post(
   }
 )
 
-router.get("/account", auth, (req, res) => {
-  jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
-    if (err) {
-      res.sendStatus(403);
-      return;
-    } else {
+router.get("/account",  (req, res) => {
+  // jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+    // if (err) {
+    //   res.sendStatus(403);
+    //   return;
+    // } else {
       User.findById(req.user.id)
         .select("-password")
         .then(user => {
           res.json({
             user: user,
-            authData: authData,
+            // authData: authData,
             message: "user found"
           })
+        }).catch(err => {
+          if (err) {
+            res.sendStatis(418);
+            return;
+          }
         })
-    }
-  })
+    // }
+  // })
 })
 
 // router.get(

@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
+import { useHistory } from 'react-router';
 import Subsubheader from "../components/Subsubheader/Subsubheader";
+import UserLoginContext from "../utils/userLoginContext";
 import "./Account.css";
+import axios from "axios"
 
 function Account() {
+
+    // for page redirect
+    const history = useHistory();
+
+    // useRef
+    var formRef = useRef();
+
+    // useContext
+    const { user, setUser } = useContext(UserLoginContext);
+
+    // useState
+    // const [user, setUser] = useState();
+    const [username, setUsername] = useState();
+    const [email, setEmail] = useState();
+
+    //to set initial state after page load to display nominee list
+    useEffect(() => {
+        axios.get("/api/users/account")
+            .then(function (response) {
+                console.log(response.data);
+                const accountData = response.data;
+                setUser(accountData)
+                setUsername(response.data.user.username);
+                setEmail(response.data.user.email)
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [])
 
     //call api/account to get info and put info inside JSX
 
@@ -10,31 +43,17 @@ function Account() {
         <div>
             <Subsubheader h4="My Account" p="Update your account details" />
 
-            <div className="container w">
-                <div className="row centered">
+            <div className="wrapperaccount">
+                <h5 id="accountHeader">Account Details</h5>
+                <div className="container" id="accountContainer">
+                    {/* <ul className="list-group"> */}
+                    <p className="accountItem" id="accountUsername">Username: <span className="accountValue">{username}</span> <button type="button" className="btn accountChangeBtn">Change Username</button></p>
+                    <p className="accountItem" id="accountEmail">Email: <span className="accountValue">{email}</span></p>
+                    <p className="accountItem" id="accountPassword">Password: <button type="button" className="btn accountChangeBtn">Change Password</button></p>
+                    {/* </ul> */}
                     <br />
                     <br />
-
-                    <div className="col-lg-4">
-                        <i className="fa fa-upload"></i>
-                        <h4>CONSOLIDATE</h4>
-                        <p>Put all your important documents and last wishes together to make it easier for your loved ones to deal with all that happens after your death.</p>
-                    </div>
-
-                    <div className="col-lg-4">
-                        <i className="fa fa-heart"></i>
-                        <h4>NOMINATE</h4>
-                        <p>Choose the trusted people in your life to deal with your administrative matters.</p>
-                    </div>
-
-                    <div className="col-lg-4">
-                        <i className="fa fa-lock"></i>
-                        <h4>SECURE</h4>
-                        <p>Your private information is safe and secure with us.</p>
-                    </div>
                 </div>
-                <br />
-                <br />
             </div>
         </div>
     )

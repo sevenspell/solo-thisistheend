@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router';
 import Subheader from "../components/Subheader/Subheader";
 import UserLoginContext from "../utils/userLoginContext";
@@ -18,6 +18,9 @@ function MyPeople() {
     var emailRef = useRef();
     var responsibilityRef = useRef();
     var listRef = useRef();
+
+    // useContext
+    const { user, setUser } = useContext(UserLoginContext);
 
     // useState
     const [role, setRole] = useState();

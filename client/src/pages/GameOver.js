@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
+import React, { useRef, useState, useCallback, useEffect, useContext } from "react";
 import { useHistory } from 'react-router';
 import { useDropzone } from "react-dropzone";
 import Subheader from "../components/Subheader/Subheader";
@@ -30,6 +30,8 @@ function GameOver() {
     var uploadRef = useRef();
     var fileFormRef = useRef();
 
+    // useContext
+    const { user, setUser } = useContext(UserLoginContext);
 
     const [file, setFile] = useState();
     const [fileCategory, setFileCategory] = useState();

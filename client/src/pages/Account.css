@@ -1,0 +1,34 @@
+#accountHeader{
+    text-align: left;
+    margin: 30px;
+    padding-left: 150px;
+    font-family: 'Lato', sans-serif;  
+    letter-spacing: 1px; 
+    font-size: 24px;;
+}
+
+#accountContainer{
+    background-color:  rgb(235, 235, 235);
+    /* margin: 20px; */
+    padding: 30px;
+    font-family: 'Lato', sans-serif;  
+    letter-spacing: 1px; 
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.accountChangeBtn{
+    background-color: #c8e6ff;
+    font-family: 'Lato', sans-serif;  
+    letter-spacing: 1px; 
+    font-size: 14px;
+    margin: 40px;
+}
+
+.accountValue{
+    margin: 20px;
+    font-family: 'Lato', sans-serif;  
+    font-weight: 700;
+    color: rgb(62, 144, 211);
+
+}
