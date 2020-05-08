@@ -1,9 +1,9 @@
 // import React from "react";
 import Header from "../components/Header/Header";
 import "./Home.css";
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios';
-import { useHistory } from 'react-router'; 
+import { useHistory } from 'react-router';
 import UserLoginContext from "../utils/userLoginContext";
 
 function Home() {
@@ -11,27 +11,36 @@ function Home() {
 	const history = useHistory();
 
 	const { user, setUser } = useContext(UserLoginContext);
-
-	const [username, setUsername] = useState("");
+	const { username, setUsername } = useState("");
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [token, setToken] = useState({})
 
+	//to set initial state after page load to display nominee list
 
-    const submitForm = e => {
-        e.preventDefault();
+	const submitForm = e => {
+		e.preventDefault();
 
-        axios.post('/api/users/login', {
-            username: username,
-            password: password
-        }).then((res) => {
-            if(res.data.success){
-				setUser(res.data)
+		axios.post('/api/users/login', {
+			email: email,
+			password: password
+		}).then((res) => {
+			console.log(res)
+			if (res.data.user.success) {
+				setUser(res.data.user)
+				// setUsername(res.data.user.username)
 				history.push("/gameover");
-				console.log(res.data.mes)
-				console.log(res.data.id)
-            }
+				console.log(res.data.user)
+				console.log(res.data.user.mes)
+				console.log(res.data.user.id)
+				console.log(res.data.user.username)
+				console.log(res.data.token)
+				localStorage.setItem('jwt', JSON.stringify({ jwt1: 'authorization', jwt2: 'bearer ' + res.data.token }))
+			}
 		})
-		
 	}
+
+
 
 	return (
 		<div>
@@ -63,14 +72,45 @@ function Home() {
 				<br />
 				<br />
 			</div>
-			<div id="loginContainer">
+
+			{
+				!user
+					?
+					<div id="loginContainer">
+					<h5 id="loginformheader">Please login to proceed</h5>
+					<form id="loginform" onSubmit={submitForm}>
+						<label id="emaillabel">Email:</label>
+						<input
+							onChange={(e) => setEmail(e.target.value)}
+							type="text"
+							placeholder="Enter your login email"
+							className="forminput"
+						/>
+						<br />
+						<label id="passwordlabel">Password:</label>
+						<input
+							onChange={(e) => setPassword(e.target.value)}
+							type="password"
+							placeholder="Enter your password"
+							className="forminput"
+						/>
+						<br />
+						<button type="submit" id="loginbtn">Login <i className="fa fa-sign-in" id="loginlogo" aria-hidden="true"></i></button>
+					</form>
+					<p id="signuplink">If you do not have an account, click <a href="/signup">here</a> to create one.</p>
+				</div>
+					:
+					<div></div>
+			}
+
+			{/* <div id="loginContainer">
 				<h5 id="loginformheader">Please login to proceed</h5>
 				<form id="loginform" onSubmit={submitForm}>
-					<label id="usernamelabel">Username:</label>
+					<label id="emaillabel">Email:</label>
 					<input
-						onChange={(e) => setUsername(e.target.value)}
+						onChange={(e) => setEmail(e.target.value)}
 						type="text"
-						placeholder="Enter your username"
+						placeholder="Enter your login email"
 						className="forminput"
 					/>
 					<br />
@@ -85,7 +125,7 @@ function Home() {
 					<button type="submit" id="loginbtn">Login <i className="fa fa-sign-in" id="loginlogo" aria-hidden="true"></i></button>
 				</form>
 				<p id="signuplink">If you do not have an account, click <a href="/signup">here</a> to create one.</p>
-			</div>
+			</div> */}
 			<br />
 			<br />
 			<br />

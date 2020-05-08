@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const uploadFile = require('../service/fileRoutes');
 const formidable = require('express-formidable');
+const auth = require("../service/auth");
 require('dotenv').config();
 router.use(cors());
 router.use(bodyParser.json());

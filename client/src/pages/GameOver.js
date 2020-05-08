@@ -1,7 +1,8 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useHistory } from 'react-router';
 import { useDropzone } from "react-dropzone";
 import Subheader from "../components/Subheader/Subheader";
+import UserLoginContext from "../utils/userLoginContext";
 import "./GameOver.css";
 import axios from "axios"
 
@@ -27,12 +28,24 @@ function GameOver() {
     const history = useHistory();
 
     var uploadRef = useRef();
-    // var fileCategoryRef = useRef();
+    var fileFormRef = useRef();
+
 
     const [file, setFile] = useState();
     const [fileCategory, setFileCategory] = useState();
     const [filename, setFilename] = useState();
-    const [filelist, setFilelist] = useState();
+    // const [filelist, setFilelist] = useState();
+    const [token, setToken] = useState()
+
+    useEffect(() => {
+
+        const getToken = localStorage.getItem('jwt');
+        setToken(getToken)
+        // && setToken({
+        // 	jwt: JSON.parse(localStorage.getItem('jwt')),
+        // })
+        console.log(getToken)
+    }, [])
 
     const onDrop = useCallback(acceptedFiles => {
 
@@ -41,6 +54,7 @@ function GameOver() {
         setFilename(acceptedFiles[0].name)
 
     }, [file])
+
 
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -83,9 +97,15 @@ function GameOver() {
 
             if (res.data.success) {
                 console.log("file upload is successful")
+                resetFields();
                 history.push("/gameover");
             }
         })
+    }
+
+    function resetFields() {
+        fileFormRef.reset();
+        setFilename("")
     }
 
 
@@ -120,19 +140,20 @@ function GameOver() {
                         id='uploadForm'
                         action='/api/upload'
                         method='post'
+                        ref={ref => fileFormRef = ref}
                         encType="multipart/form-data">
                         {/* > */}
                         <div {...getRootProps()}>
-                        {/* <input {...getInputProps()} onChange={onChangeHandler} /> */}
+                            {/* <input {...getInputProps()} onChange={onChangeHandler} /> */}
                             <div id="upload-container">
-                            
+
                                 <div className="border-container">
                                     <div className="icons fa-4x">
                                         <i className="fa fa-file-image-o uploadIcon" data-fa-transform="shrink-3 down-2 left-6 rotate--30"></i>
                                         <i className="fa fa-file-text uploadIcon" data-fa-transform="shrink-2 up-4"></i>
                                         <i className="fa fa-file-pdf-o uploadIcon" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
                                     </div>
-                                    
+
                                     <input {...getInputProps()} type="file" name="file" id="file-upload" ref={ref => uploadRef = ref} onChange={onChangeHandler} />
                                     <p id="findtext">Drag and drop files here, or
                                 <a href="#" id="file-browser" onClick={openBrowser}> browse</a> your computer.</p>
@@ -161,6 +182,31 @@ function GameOver() {
                     <br />
                 </div>
             </div>
+            {/* modal trigger button
+            <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Launch demo modal
+            </button> */}
+
+            {/* modal */}
+            {/* <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            ...
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
             <br />
             <br />
             <br />

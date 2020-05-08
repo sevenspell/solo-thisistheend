@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useHistory } from 'react-router';
 import Subheader from "../components/Subheader/Subheader";
+import UserLoginContext from "../utils/userLoginContext";
 import "./MyPeople.css";
 import axios from "axios"
 
@@ -101,6 +102,9 @@ function MyPeople() {
         axios.delete("/api/nominees/delete", { params: { id: _id }})
         .then(function (response) {
             console.log(response)
+            getList();
+            resetFields();
+            history.push("/mypeople");
         })
         .catch(function (error) {
             console.log(error);

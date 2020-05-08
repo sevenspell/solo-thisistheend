@@ -7,6 +7,7 @@ const MongoStore = require('connect-mongo')(session)
 const passport = require('./passport');
 const mongoose = require('mongoose');
 const path = require("path");
+const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require('cors');
 
@@ -51,9 +52,18 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/solo-thisisthee
 app.use(
 	session({
 		secret: process.env.SECRET || 'cherry-blackie-blossoms', //pick a random string to make the hash that is generated secure
-		store: new MongoStore({ mongooseConnection: dbConnection }),
+		store: new MongoStore({ 
+			mongooseConnection: dbConnection,
+			// collection: 'session',
+			// ttl: parseInt(1000 * 60 * 60 * 2) / 1000
+		 }),
 		resave: false, //required
-		saveUninitialized: false //required
+		saveUninitialized: false, //required
+		// cookie: {
+		// 	sameSite: true,
+		// 	secure: process.env.NODE_ENV === 'production',
+		// 	maxAge: parseInt(1000 * 60 * 60 * 2)
+		//   }
 	})
 )
 
