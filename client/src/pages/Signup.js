@@ -27,7 +27,8 @@ function Signup() {
             email: email,
             password: password
         }).then((res) => {
-            if(res.data.success){
+            console.log(res)
+            if(res.data.user.success){
                 history.push("/");
             }
         })

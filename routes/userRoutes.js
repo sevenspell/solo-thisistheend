@@ -41,7 +41,7 @@ router.post('/signup', (req, res) => {
           password: password
         })
         newUser.save((err, user) => {
-          if (err) return res.json(err)
+          if (err) return res.json({err: err, msg: "signup is not working" })
           console.log("user account created")
           //jwt payload
           jwt.sign(
@@ -51,7 +51,7 @@ router.post('/signup', (req, res) => {
             (err, token) => {
               if (err) throw err;
               console.log(token)
-              res.json({
+              res.send({
                 token,
                 user: {
                   id: user.id,
