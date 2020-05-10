@@ -15,7 +15,23 @@
     #navbartoggler {
         position: absolute;
         top: 45%;
-        left: 65%;        
+        left: 50%;        
+    }
+
+    #welcomeline{
+        padding: 5px 15px 3px 20px;
+        font-family: 'Lato', sans-serif;
+        /* color: #98cff3; */
+        color: #c8e6ff;
+        font-size: 16px;
+    }
+
+    #welcomeUsername{
+        color: #7ccbff;
+        font-family: 'Satisfy', cursive;
+        font-size: 22px;
+        padding: 5px 15px 3px 5px;
+        
     }
 
     .navbar {
@@ -42,6 +58,8 @@
         font-size: 14px;
         border-radius: 5px;
         background-color: #c8e6ff;
+        /* border-width: 3px;
+        border-color: #343a40; */
         padding: 5px;
         width: 80px;
         position: absolute;

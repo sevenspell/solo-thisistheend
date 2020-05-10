@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router';
 import Subheader from "../components/Subheader/Subheader";
-import UserLoginContext from "../utils/userLoginContext";
+import { UserProvider, useUserContext } from "../utils/userLoginContext"
 import "./MyPeople.css";
 import axios from "axios"
 
@@ -20,7 +20,8 @@ function MyPeople() {
     var listRef = useRef();
 
     // useContext
-    const { user, setUser } = useContext(UserLoginContext);
+    const [ user, setUser ] = useState()
+	const [ state, dispatch ] = useUserContext();
 
     // useState
     const [role, setRole] = useState();
@@ -32,16 +33,44 @@ function MyPeople() {
 
     //to set initial state after page load to display nominee list
     useEffect(() => {
-        axios.get("/api/nominees/list")
+
+        const getToken = localStorage.getItem('token');
+        const getUserid = localStorage.getItem('userId')
+        const getLoggedIn = localStorage.getItem('loggedIn')
+
+
+        axios.get("/api/nominees/list", {
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${getToken}`
+            }
+        })
         .then(function (response) {
             console.log(response.data);
+            // dispatch({type:"logged in", username: response.data.user.username})
             const listArray = response.data;
             setList(listArray)
-          
+
         })
         .catch(function (error) {
             console.log(error);
         });
+
+        axios.get("/api/users/account/" + getUserid, {
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${getToken}`
+            }
+        }).then((res, err) => { // then print response status
+            if (err) throw (err)
+
+            if (res.data.success) {
+                console.log("get userlogin status is successful")
+                dispatch({type:"logged in", username: res.data.user.username})
+                // history.push("/mypeople");
+            }
+        })
+
     }, [])
 
     //change all input to uppercase
@@ -60,19 +89,25 @@ function MyPeople() {
         formData.append("contact", contact);
         formData.append("email", email);
         formData.append("responsibility", responsibility);
+        // formData.append("token", localStorage.getItem('token'))
 
+        const token = localStorage.getItem('token')
+    
+        // const token = localStorage.getItem('token')
         axios.post("/api/nominees/submit", formData, {
-
+            
             headers: {
                 'accept': 'application/json',
                 'Accept-Language': 'en-US,en;q=0.8',
-                'Content-Type': `multipart/form-data'; boundary=${formData._boundary}`
+                'Content-Type': `multipart/form-data'; boundary=${formData._boundary}`,
+                'Authorization': `Bearer ${token}`
             }
         }).then((res, err) => { // then print response status
             if (err) throw (err)
 
             if (res.data.success) {
                 console.log("nominee entry is successful")
+   
                 getList();
                 resetFields();
                 history.push("/mypeople");

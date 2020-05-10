@@ -125,28 +125,32 @@ router.post(
   }
 )
 
-router.get("/account",  (req, res) => {
-  // jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
-    // if (err) {
-    //   res.sendStatus(403);
-    //   return;
-    // } else {
-      User.findById(req.user.id)
+router.get("/account/:id", auth, (req, res) => {
+  
+  console.log(req.token)
+  jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
+      return;
+    } else {
+      User.findById(req.params.id)
         .select("-password")
         .then(user => {
-          res.json({
+          res.send({
             user: user,
-            // authData: authData,
-            message: "user found"
+            authData: authData,
+            message: "user found",
+            success: true
           })
-        }).catch(err => {
-          if (err) {
-            res.sendStatis(418);
-            return;
-          }
         })
-    // }
-  // })
+        // .catch(err => {
+        //   if (err) {
+        //     res.sendStatis(418);
+        //     return
+        //   }
+        // })
+    }
+  })
 })
 
 // router.get(
@@ -224,6 +228,7 @@ router.post('/account', function (req, res) {
 router.get('/logout', (req, res) => {
   if (req.user) {
     req.logout();
+    console.log("logout successful")
     res.send({
       success: true,
       msg: 'logging out'

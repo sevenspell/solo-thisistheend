@@ -2,7 +2,7 @@ import React, { useRef, useState, useCallback, useEffect, useContext } from "rea
 import { useHistory } from 'react-router';
 import { useDropzone } from "react-dropzone";
 import Subheader from "../components/Subheader/Subheader";
-import UserLoginContext from "../utils/userLoginContext";
+import { UserProvider, useUserContext } from "../utils/userLoginContext"
 import "./GameOver.css";
 import axios from "axios"
 
@@ -31,22 +31,37 @@ function GameOver() {
     var fileFormRef = useRef();
 
     // useContext
-    const { user, setUser } = useContext(UserLoginContext);
-
+	const [ user, setUser ] = useState()
+	const [ state, dispatch ] = useUserContext();
     const [file, setFile] = useState();
     const [fileCategory, setFileCategory] = useState();
     const [filename, setFilename] = useState();
     // const [filelist, setFilelist] = useState();
-    const [token, setToken] = useState()
+    const [token, setToken] = useState();
 
     useEffect(() => {
 
-        const getToken = localStorage.getItem('jwt');
-        setToken(getToken)
-        // && setToken({
-        // 	jwt: JSON.parse(localStorage.getItem('jwt')),
-        // })
-        console.log(getToken)
+        const getToken = localStorage.getItem('token');
+        const getUserid = localStorage.getItem('userId')
+        const getLoggedIn = localStorage.getItem('loggedIn')
+
+        // axios.get using userid and token from localstorage, backend use id to verify against mongoose id + token (middle)
+
+        axios.get("/api/users/account/" + getUserid, {
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${getToken}`
+            }
+        }).then((res, err) => { // then print response status
+            if (err) throw (err)
+
+            if (res.data.success) {
+                console.log("get userlogin status is successful")
+                dispatch({type:"logged in", username: res.data.user.username})
+                history.push("/gameover");
+            }
+        })
+ 
     }, [])
 
     const onDrop = useCallback(acceptedFiles => {
@@ -69,7 +84,6 @@ function GameOver() {
         console.log(e.target.files[0].name);
         setFile(e.target.files[0])
         setFilename(e.target.files[0].name)
-        //{(e) => setFile(e.target.files[0])}
     }
 
     const fileCategoryChange = (e) => {
@@ -79,13 +93,11 @@ function GameOver() {
     // Upload file function
     const onClickHandler = (e) => {
         e.preventDefault();
-        console.log(fileCategory)
+
         const formData = new FormData();
-        // sendingData.append(nameOfTheImageFiles[i], file, "sample.JPG");
+ 
         formData.append("file", file, filename);
         formData.append("fileCategory", fileCategory)
-        console.log(formData)
-        // submitForm("multipart/form-data", formData, (msg) => console.log(msg));
 
         axios.post("/api/upload", formData, {
             // receive two parameter endpoint url ,form data
@@ -146,16 +158,13 @@ function GameOver() {
                         encType="multipart/form-data">
                         {/* > */}
                         <div {...getRootProps()}>
-                            {/* <input {...getInputProps()} onChange={onChangeHandler} /> */}
                             <div id="upload-container">
-
                                 <div className="border-container">
                                     <div className="icons fa-4x">
                                         <i className="fa fa-file-image-o uploadIcon" data-fa-transform="shrink-3 down-2 left-6 rotate--30"></i>
                                         <i className="fa fa-file-text uploadIcon" data-fa-transform="shrink-2 up-4"></i>
                                         <i className="fa fa-file-pdf-o uploadIcon" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
                                     </div>
-
                                     <input {...getInputProps()} type="file" name="file" id="file-upload" ref={ref => uploadRef = ref} onChange={onChangeHandler} />
                                     <p id="findtext">Drag and drop files here, or
                                 <a href="#" id="file-browser" onClick={openBrowser}> browse</a> your computer.</p>

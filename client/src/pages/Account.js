@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router';
 import Subsubheader from "../components/Subsubheader/Subsubheader";
-import UserLoginContext from "../utils/userLoginContext";
+import { UserProvider, useUserContext } from "../utils/userLoginContext"
 import "./Account.css";
 import axios from "axios"
 
@@ -14,23 +14,33 @@ function Account() {
     var formRef = useRef();
 
     // useContext
-    const { user, setUser } = useContext(UserLoginContext);
+	const [ state, dispatch ] = useUserContext();
 
     // useState
-    // const [user, setUser] = useState();
+    const [user, setUser] = useState();
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
 
     //to set initial state after page load to display nominee list
     useEffect(() => {
-        axios.get("/api/users/account")
-            .then(function (response) {
-                console.log(response.data);
-                const accountData = response.data;
-                setUser(accountData)
-                setUsername(response.data.user.username);
-                setEmail(response.data.user.email)
 
+        const getToken = localStorage.getItem('token');
+        const getUserid = localStorage.getItem('userId')
+        const getLoggedIn = localStorage.getItem('loggedIn')
+
+        axios.get("/api/users/account/" + getUserid, {
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${getToken}`
+            }
+        }).then(function (res, err) {
+                if (err) throw err;
+                console.log("get userlogin status is successful")
+                dispatch({type:"logged in", username: res.data.user.username})
+                const accountData = res.data;
+                setUser(accountData)
+                setUsername(res.data.user.username);
+                setEmail(res.data.user.email)
             })
             .catch(function (error) {
                 console.log(error);

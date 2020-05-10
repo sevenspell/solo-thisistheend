@@ -9,7 +9,9 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Wrapper from "./components/Wrapper/Wrapper";
 import "./App.css";
-import UserLoginContext from "./utils/userLoginContext";
+import { UserProvider, useUserContext } from "./utils/userLoginContext"
+// import UserLoginContext from "./utils/userLoginContext";
+// import UserLoginProvider from "./utils/userLoginContext";
 
 function App() {
 
@@ -20,7 +22,7 @@ function App() {
   };
 
   return (
-    <UserLoginContext.Provider value={{user, setUser}} >
+    <UserProvider >
     <Router>
       <div>
         <Navbar />
@@ -34,7 +36,7 @@ function App() {
         <Footer />
       </div>
     </Router>
-    </UserLoginContext.Provider>
+    </UserProvider>
   );
 }
 

@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import UserLoginContext from "../../utils/userLoginContext";
+import { UserProvider, useUserContext } from "../../utils/userLoginContext"
 
 function Navbar() {
 
-    const { user, setUser } = useContext(UserLoginContext);
+    const [username, setUsername] = useState()
+    const [state, dispatch] = useUserContext();
 
     const history = useHistory();
 
@@ -17,10 +18,18 @@ function Navbar() {
         axios.get('/api/users/logout').then((res) => {
 
             if (res.data.success) {
-                localStorage.removeItem('jwt')
-                setUser(null);
+                setUsername(null);
+                dispatch({ type: "logged out", username: "" })
+                localStorage.removeItem('token')
+                localStorage.removeItem('userId')
+                localStorage.removeItem('loggedIn')
+                localStorage.removeItem('username')
+
                 history.push("/");
             }
+        }).catch(err => {
+            if (err) throw err;
+            console.log(err)
         })
     }
 
@@ -39,7 +48,7 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="navbartoggler">
                     <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                         {
-                            user
+                            state.username
                                 ?
                                 <li className="nav-item">
                                     <Link
@@ -55,20 +64,9 @@ function Navbar() {
                                 :
                                 <li></li>
                         }
-                        {/* <li className="nav-item">
-                            <Link
-                                to="/"
-                                className={
-                                    window.location.pathname === "/"
-                                        ? "nav-link active"
-                                        : "nav-link"
-                                }>
-                                Home
-                        </Link>
-                        </li> */}
 
                         {
-                            user
+                            state.username
                                 ?
                                 <li className="nav-item">
                                     <Link
@@ -81,17 +79,9 @@ function Navbar() {
                                 :
                                 <li></li>
                         }
-                        {/* <li className="nav-item">
-                            <Link
-                                to="/gameover"
-                                className={window.location.pathname === "/gameover" ? "nav-link active" : "nav-link"}
-                            >
-                                Game Over
-                        </Link>
-                        </li> */}
 
                         {
-                            user
+                            state.username
                                 ?
                                 <li className="nav-item">
                                     <Link
@@ -104,17 +94,9 @@ function Navbar() {
                                 :
                                 <li></li>
                         }
-                        {/* <li className="nav-item">
-                            <Link
-                                to="/mypeople"
-                                className={window.location.pathname === "/mypeople" ? "nav-link active" : "nav-link"}
-                            >
-                                My People
-                        </Link>
-                        </li> */}
 
                         {
-                            user
+                            state.username
                                 ?
                                 <li className="nav-item">
                                     <Link
@@ -127,16 +109,19 @@ function Navbar() {
                                 :
                                 <li></li>
                         }
-                        {/* <li className="nav-item">
-                            <Link
-                                to="/myaccount"
-                                className={window.location.pathname === "/myaccount" ? "nav-link active" : "nav-link"}
-                            >
-                                My Account
-                        </Link>
-                        </li> */}
+
                         {
-                            user
+                            state.username
+                                ?
+                                <li className="nav-item">
+                                    <p id="welcomeline">Welcome <span id="welcomeUsername">{state.username}</span></p>
+                                </li>
+                                :
+                                <li></li>
+                        }
+
+                        {
+                            state.username
                                 ?
                                 <li className="nav-item">
 

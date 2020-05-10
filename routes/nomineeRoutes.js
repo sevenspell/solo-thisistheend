@@ -8,51 +8,51 @@ const auth = require("../service/auth");
 router.use(bodyParser.json());
 router.use(cors());
 
-router.post("/submit", (req, res) => {
+router.post("/submit", auth, (req, res) => {
     console.log("post route for nominee ok")
     console.log(req)
 
     const { role, name, contact, email, responsibility } = req.fields;
 
-    // jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+    jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
 
-    //     if (err) {
-    //         res.sendStatus(418)
-    //         return;
-    //     } else {
-    //         Nominee.create({
-    //             role: role,
-    //             name: name,
-    //             contact: contact,
-    //             email: email,
-    //             responsibility: responsibility
-    //         }).then(dbNominee => {
-    //             console.log(dbNominee)
-    //             return res.json({
-    //                 success: true,
-    //                 mes: "nominee entry created"
-    //             })
-    //         })
-    //     }
-    // })
-
-    console.log(req.fields)
-    Nominee.create({
-        role: role,
-        name: name,
-        contact: contact,
-        email: email,
-        responsibility: responsibility
-    }).then(dbNominee => {
-        console.log(dbNominee)
-        return res.json({
-            success: true,
-            mes: "nominee entry created"
-        })
-    }).catch(err => {
-        console.log(err)
-        if (err) return res.json(err);
+        if (err) {
+            res.sendStatus(418)
+            return;
+        } else {
+            Nominee.create({
+                role: role,
+                name: name,
+                contact: contact,
+                email: email,
+                responsibility: responsibility
+            }).then(dbNominee => {
+                console.log(dbNominee)
+                return res.json({
+                    success: true,
+                    mes: "nominee entry created"
+                })
+            })
+        }
     })
+
+    // console.log(req.fields)
+    // Nominee.create({
+    //     role: role,
+    //     name: name,
+    //     contact: contact,
+    //     email: email,
+    //     responsibility: responsibility
+    // }).then(dbNominee => {
+    //     console.log(dbNominee)
+    //     return res.json({
+    //         success: true,
+    //         mes: "nominee entry created"
+    //     })
+    // }).catch(err => {
+    //     console.log(err)
+    //     if (err) return res.json(err);
+    // })
 
 })
 

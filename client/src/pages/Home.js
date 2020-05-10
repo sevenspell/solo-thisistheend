@@ -4,19 +4,57 @@ import "./Home.css";
 import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import UserLoginContext from "../utils/userLoginContext";
+import { UserProvider, useUserContext } from "../utils/userLoginContext"
+// import UserLoginContext from "../utils/userLoginContext";
 
 function Home() {
 
 	const history = useHistory();
 
-	const { user, setUser } = useContext(UserLoginContext);
-	const { username, setUsername } = useState("");
+	const [ state, dispatch ] = useUserContext();
+
+	const [ user, setUser ] = useState({});
+	const [ username, setUsername ] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [token, setToken] = useState({})
 
-	//to set initial state after page load to display nominee list
+	useEffect(() => {
+
+        const getToken = localStorage.getItem('token');
+        const getUserid = localStorage.getItem('userId')
+        const getLoggedIn = localStorage.getItem('loggedIn')
+        const getUsername = localStorage.getItem('username')
+
+        // axios.get using userid and token from localstorage, backend use id to verify against mongoose id + token (middle)
+
+		if (getUserid){
+			console.log("userid exists")
+			axios.get("/api/users/account/" + getUserid, {
+				headers: {
+					'accept': 'application/json',
+					'Authorization': `Bearer ${getToken}`
+				}
+			}).then((res, err) => { // then print response status
+				if (err) throw (err)
+	
+				if (res.data.success) {
+					console.log(res.data.user.username)
+					console.log("get userlogin status is successful")
+					setUsername(getUsername)
+					dispatch({type:"logged in", username: res.data.user.username})
+				}
+			}).catch(err => {
+				if (err) throw err;
+				console.log(err)
+			})
+		} else {
+			console.log("no userid exists")
+			return;
+		}
+
+
+    }, [])
+
 
 	const submitForm = e => {
 		e.preventDefault();
@@ -27,15 +65,19 @@ function Home() {
 		}).then((res) => {
 			console.log(res)
 			if (res.data.user.success) {
+	
 				setUser(res.data.user)
-				// setUsername(res.data.user.username)
 				history.push("/gameover");
 				console.log(res.data.user)
 				console.log(res.data.user.mes)
 				console.log(res.data.user.id)
 				console.log(res.data.user.username)
 				console.log(res.data.token)
-				localStorage.setItem('jwt', JSON.stringify({ jwt1: 'authorization', jwt2: 'bearer ' + res.data.token }))
+				localStorage.setItem('token', res.data.token)
+				localStorage.setItem('userId', res.data.user.id)
+				localStorage.setItem('loggedIn', true)
+				localStorage.setItem('username', res.data.user.username)
+				dispatch({type:"logged in", username: res.data.user.username})
 			}
 		})
 	}
@@ -74,7 +116,7 @@ function Home() {
 			</div>
 
 			{
-				!user
+				!state.username
 					?
 					<div id="loginContainer">
 					<h5 id="loginformheader">Please login to proceed</h5>
