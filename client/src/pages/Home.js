@@ -5,7 +5,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import { UserProvider, useUserContext } from "../utils/userLoginContext"
-// import UserLoginContext from "../utils/userLoginContext";
+
 
 function Home() {
 
@@ -67,7 +67,7 @@ function Home() {
 			if (res.data.user.success) {
 	
 				setUser(res.data.user)
-				history.push("/gameover");
+				history.push("/mypeople");
 				console.log(res.data.user)
 				console.log(res.data.user.mes)
 				console.log(res.data.user.id)
@@ -144,30 +144,6 @@ function Home() {
 					:
 					<div></div>
 			}
-
-			{/* <div id="loginContainer">
-				<h5 id="loginformheader">Please login to proceed</h5>
-				<form id="loginform" onSubmit={submitForm}>
-					<label id="emaillabel">Email:</label>
-					<input
-						onChange={(e) => setEmail(e.target.value)}
-						type="text"
-						placeholder="Enter your login email"
-						className="forminput"
-					/>
-					<br />
-					<label id="passwordlabel">Password:</label>
-					<input
-						onChange={(e) => setPassword(e.target.value)}
-						type="password"
-						placeholder="Enter your password"
-						className="forminput"
-					/>
-					<br />
-					<button type="submit" id="loginbtn">Login <i className="fa fa-sign-in" id="loginlogo" aria-hidden="true"></i></button>
-				</form>
-				<p id="signuplink">If you do not have an account, click <a href="/signup">here</a> to create one.</p>
-			</div> */}
 			<br />
 			<br />
 			<br />

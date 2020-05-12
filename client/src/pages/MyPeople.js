@@ -67,7 +67,7 @@ function MyPeople() {
             if (res.data.success) {
                 console.log("get userlogin status is successful")
                 dispatch({type:"logged in", username: res.data.user.username})
-                // history.push("/mypeople");
+                
             }
         })
 

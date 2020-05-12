@@ -100,5 +100,8 @@ const deleteFile = (filename) => {
 // })
 
 
-module.exports = {uploadFile, deleteFile};
+module.exports = {
+    uploadFile: uploadFile, 
+    deleteFile: deleteFile
+};
 

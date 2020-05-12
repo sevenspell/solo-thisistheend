@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const uploadFile = require('../service/fileRoutes');
-const deleteFile = require("../service/fileRoutes")
+const S3Files = require('../service/fileRoutes');
 const formidable = require('express-formidable');
 const File = require('../database/models/file')
 const jwt = require("jsonwebtoken");
@@ -21,7 +20,7 @@ router.post('/upload', auth, function (req, res) {
     const filepath = req.files.file.path
     const fileCategory = req.fields.fileCategory
 
-    uploadFile(filepath, filename, res);
+    S3Files.uploadFile(filepath, filename, res);
 
     jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
 
@@ -86,7 +85,7 @@ router.delete("/delete", auth, function (req, res) {
 
     console.log("delete route is ok for " + req.query.id)
 
-    // deleteFile()
+    // S3Files.deleteFile()
 
     // jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
 

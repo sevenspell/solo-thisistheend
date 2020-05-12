@@ -7,22 +7,6 @@ import "./GameOver.css";
 import axios from "axios"
 
 
-// function submitForm(contentType, data, setResponse) {
-//     axios({
-//         url: 'http://localhost:3000/api/upload',
-//         method: 'POST',
-//         data: data,
-//         headers: {
-//             'Content-Type': contentType
-//         }
-//     }).then((response) => {
-//         setResponse(response.data);
-//         console.log(response.data)
-//     }).catch((error) => {
-//         setResponse(error);
-//     })
-// }
-
 function GameOver() {
 
     const history = useHistory();
@@ -149,8 +133,8 @@ function GameOver() {
 
 
 
-    const getStorageData = (e) => {
-        e.preventDefault();
+    const getStorageData = () => {
+      
         const getToken = localStorage.getItem('token');
         const getUserid = localStorage.getItem('userId')
         const getLoggedIn = localStorage.getItem('loggedIn')
