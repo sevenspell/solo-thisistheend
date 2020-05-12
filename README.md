@@ -69,4 +69,4 @@ For future enhancements:
 
 
 ## Credits
-I got a deeper understanding of the MERN stack from Wagner (https://wagner-lopes.github.io/) and a lot of guidance and help from Jack Song (https://sk8.tech).
+I got a deeper understanding of the MERN stack from Wagner (https://wagner-lopes.github.io/), an understanding of how jsonwebtokens and useContext from React work from Jasper Du (https://jasperdesigns.herokuapp.com/) and a lot of guidance and help from Jack Song (https://sk8.tech).

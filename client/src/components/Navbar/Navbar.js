@@ -45,6 +45,15 @@ function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <p id="logotext">A Place To Draw Your Full Stop.</p>
+                {
+                    state.username
+                        ?
+                        <li className="nav-item">
+                            <p id="welcomeline">Welcome, <span id="welcomeUsername">{state.username}</span></p>
+                        </li>
+                        :
+                        <li></li>
+                }
                 <div className="collapse navbar-collapse" id="navbartoggler">
                     <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                         {
@@ -70,10 +79,10 @@ function Navbar() {
                                 ?
                                 <li className="nav-item">
                                     <Link
-                                        to="/gameover"
-                                        className={window.location.pathname === "/gameover" ? "nav-link active" : "nav-link"}
+                                        to="/mypeople"
+                                        className={window.location.pathname === "/mypeople" ? "nav-link active" : "nav-link"}
                                     >
-                                        Game Over
+                                        My People
                             </Link>
                                 </li>
                                 :
@@ -85,10 +94,10 @@ function Navbar() {
                                 ?
                                 <li className="nav-item">
                                     <Link
-                                        to="/mypeople"
-                                        className={window.location.pathname === "/mypeople" ? "nav-link active" : "nav-link"}
+                                        to="/gameover"
+                                        className={window.location.pathname === "/gameover" ? "nav-link active" : "nav-link"}
                                     >
-                                        My People
+                                        Game Over
                             </Link>
                                 </li>
                                 :
@@ -110,7 +119,7 @@ function Navbar() {
                                 <li></li>
                         }
 
-                        {
+                        {/* {
                             state.username
                                 ?
                                 <li className="nav-item">
@@ -118,7 +127,7 @@ function Navbar() {
                                 </li>
                                 :
                                 <li></li>
-                        }
+                        } */}
 
                         {
                             state.username

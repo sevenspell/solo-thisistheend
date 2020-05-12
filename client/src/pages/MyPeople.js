@@ -163,7 +163,6 @@ function MyPeople() {
                                 <button onClick={() => deleteNominee(_id)} className="deletebtn"><i className="fa fa-trash" aria-hidden="true"></i></button>
                             </li>
                         ))}
-                        {/* <li className="list-group-item list-group-item-primary">This is a primary list group item</li> */}
                     </ul>
                     <br />
                     <br />

@@ -10,8 +10,6 @@ import Footer from "./components/Footer/Footer";
 import Wrapper from "./components/Wrapper/Wrapper";
 import "./App.css";
 import { UserProvider, useUserContext } from "./utils/userLoginContext"
-// import UserLoginContext from "./utils/userLoginContext";
-// import UserLoginProvider from "./utils/userLoginContext";
 
 function App() {
 
@@ -28,8 +26,8 @@ function App() {
         <Navbar />
         <Wrapper>
           <Route exact path="/" component={Home} />
-          <Route exact path="/gameover" component={GameOver} />
           <Route exact path="/mypeople" component={MyPeople} />
+          <Route exact path="/gameover" component={GameOver} />
           <Route exact path="/myaccount" component={Account} handleFormSubmit={handleFormSubmit}/>
           <Route exact path="/signup" component={Signup} handleFormSubmit={handleFormSubmit}/>
         </Wrapper>

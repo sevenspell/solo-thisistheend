@@ -5,7 +5,8 @@
   }
   
   body {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'Lato', sans-serif;   
     /* background: #535c68; */
   }
 
@@ -23,13 +24,37 @@
     text-align: center;
   }
 
-  #uploadedList{
+  .uploadedList{
     font-family: 'Lato', sans-serif;   
     letter-spacing: 0.3px; 
-    text-align: left;
-    width: 500px;
+    text-align: center;
+    width: auto;
     margin: 30px;
-    /* background-color: aquamarine; */
+
+  }
+
+  .fileCard{
+       background-color: #f6fbff;
+       color: #343a40;
+       width: 13rem;
+       margin: 10px;
+       margin-left: 40px;
+       margin-bottom: 50px;
+  }
+
+  .cardHead{
+    background-color: #587592;
+    color: white;
+    font-family: 'Lato', sans-serif;  
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .cardCategory{
+    font-family: 'Lato', sans-serif;  
+    font-size: 16px;
+    font-weight: 600;
+    color: #343a40;
   }
 
   .groupbox{
@@ -41,21 +66,22 @@
     border-radius: 10px;
     background-color: white;
     color: #95afc0;
-    position: sticky;
-    left: 80%;
+    margin: 10px;
+    /* position: sticky;
+    left: 80%; */
     width: 80px;
     
   }
 
   .wrapperuploaded{
-    margin: auto;
+    /* margin: auto; */
     margin-top: 30px;
-    max-width: 640px;
+    width: auto;
+    /* max-width: 640px; */
     padding-top: 60px;
     text-align: center;
     background-color: #f9f9f9;
-        /* background-color: aquamarine; */
-    padding: 20px;
+    /* padding: 10px; */
     border-radius: 10px;
   }
   
@@ -77,7 +103,8 @@
   
   h1 {
     color: #130f40;
-    font-family: 'Varela Round', sans-serif;
+    /* font-family: 'Varela Round', sans-serif; */
+    font-family: 'Lato', sans-serif;   
     letter-spacing: -.5px;
     font-weight: 700;
     padding-bottom: 10px;

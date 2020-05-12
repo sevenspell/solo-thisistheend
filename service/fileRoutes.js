@@ -39,6 +39,31 @@ const uploadFile = (pathname, filename, res) => {
     });
 };
 
+// https://thisistheend.s3-ap-southeast-2.amazonaws.com/cat.txt
+
+const deleteFile = (filename) => {
+    const params = {
+        Bucket: 'thisistheend',
+        Key: filename,
+
+    }
+
+    s3.deleteObject(params, function(err, data){
+        if (err) {
+            res.json({ err: err })
+        }
+        else if (data) {
+            console.log(data)
+            // console.log(`file at ${data.Location} has been deleted`);
+            // return res.json({
+            //     success: true,
+            //     mes: `file at ${data.Location} has been deleted`
+            // })
+        }
+    })
+
+}
+
 
 // AWS.config.update({
 //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -75,5 +100,5 @@ const uploadFile = (pathname, filename, res) => {
 // })
 
 
-module.exports = uploadFile;
+module.exports = {uploadFile, deleteFile};
 
