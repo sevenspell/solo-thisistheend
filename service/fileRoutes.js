@@ -42,6 +42,7 @@ const uploadFile = (pathname, filename, res) => {
 // https://thisistheend.s3-ap-southeast-2.amazonaws.com/cat.txt
 
 const deleteFile = (filename) => {
+
     const params = {
         Bucket: 'thisistheend',
         Key: filename,
@@ -50,10 +51,10 @@ const deleteFile = (filename) => {
 
     s3.deleteObject(params, function(err, data){
         if (err) {
-            res.json({ err: err })
+           console.log(err)
         }
         else if (data) {
-            console.log(data)
+            console.log(data + " data from service fileRoutes")
             // console.log(`file at ${data.Location} has been deleted`);
             // return res.json({
             //     success: true,

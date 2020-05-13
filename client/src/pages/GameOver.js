@@ -48,22 +48,24 @@ function GameOver() {
             }
         })
 
-        axios.get("/api/upload", {
-            headers: {
-                'accept': 'application/json',
-                'Authorization': `Bearer ${getToken}`
-            }
-        })
-            .then(function (response) {
-                console.log(response.data);
-                // dispatch({type:"logged in", username: response.data.user.username})
-                const listArray = response.data;
-                setList(listArray)
+        getStorageData()
 
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        // axios.get("/api/upload", {
+        //     headers: {
+        //         'accept': 'application/json',
+        //         'Authorization': `Bearer ${getToken}`
+        //     }
+        // })
+        //     .then(function (response) {
+        //         console.log(response.data);
+        //         // dispatch({type:"logged in", username: response.data.user.username})
+        //         const listArray = response.data;
+        //         setList(listArray)
+
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
 
     }, [])
 
@@ -134,7 +136,6 @@ function GameOver() {
 
 
     const getStorageData = () => {
-      
         const getToken = localStorage.getItem('token');
         const getUserid = localStorage.getItem('userId')
         const getLoggedIn = localStorage.getItem('loggedIn')
@@ -156,18 +157,28 @@ function GameOver() {
             });
     }
 
-    function deleteFile(_id){
+    function deleteFile({_id:_id, filename: filename}) {
+        const getToken = localStorage.getItem('token');
+        console.log(filename)
         console.log(_id)
-        // axios.delete("/api/delete", { params: { id: _id }})
-        // .then(function (response) {
-        //     console.log(response)
-        //     getStorageData();
-        //     resetFields();
-        //     history.push("/gameover");
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
+        axios.delete("/api/delete", { 
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${getToken}`
+            },
+            params: { 
+                filename: filename,
+                id: _id  }
+        })
+        .then(function (response) {
+            console.log(response)
+            getStorageData();
+            resetFields();
+            history.push("/gameover");
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     return (
@@ -175,7 +186,7 @@ function GameOver() {
             <Subheader h4="Game Over" p="Consolidate important documents and last wishes for when your game is over" />
             <div className="wrapperuploaded container">
                 <h3 id="uploadListHeader">Your Uploaded Files</h3>
-                <div  className="list-group d-flex flex-row flex-wrap uploadedList">
+                <div className="list-group d-flex flex-row flex-wrap uploadedList">
                     {list.map(({ filename, fileCategory, _id }) => (
 
                         <div key={_id} ref={ref => listRef = ref} className="card col-sm-5 fileCard">
@@ -184,10 +195,10 @@ function GameOver() {
                                 <h5 className="card-title cardCategory">{fileCategory}</h5>
                                 <p className="card-text">Nominee Tags</p>
                                 <button className="deletebtn1"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                <button onClick={deleteFile} className="deletebtn1"><i className="fa fa-trash" aria-hidden="true"></i></button>
+                                <button onClick={()=>deleteFile({_id:_id, filename: filename})} className="deletebtn1"><i className="fa fa-trash" aria-hidden="true"></i></button>
                             </div>
                         </div>
-                       
+
                     ))}
                 </div>
 

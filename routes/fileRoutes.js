@@ -83,23 +83,24 @@ router.get('/upload', auth, function (req, res) {
 
 router.delete("/delete", auth, function (req, res) {
 
-    console.log("delete route is ok for " + req.query.id)
+    console.log("delete route is ok for " + req.query.filename + req.query.id)
 
-    // S3Files.deleteFile()
+    S3Files.deleteFile(req.query.filename)
 
-    // jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+    jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
 
-    //     if (err) {
-    //         res.sendStatus(418)
-    //         return;
-    //     } else {
-    //         File.findOneAndRemove({ _id: req.query.id }, function (err, dbFile) {
-    //             if (err) res.status(400).json(err);
-    //             console.log("file deleted from mongodb!")
-    //             res.json(dbFile);
-    //         });
-    //     }
-    // })
+        if (err) {
+            res.sendStatus(418)
+            return;
+        } else {
+            File.findOneAndRemove({ _id: req.query.id })
+            .then(dbFile => {
+            
+                console.log("file deleted from mongodb!")
+                res.json(dbFile);
+            })
+        }
+    })
 
     // File.findOneAndRemove({ _id: req.query.id }, function (err, dbFile) {
     //     if (err) res.status(400).json(err);
