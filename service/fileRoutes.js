@@ -55,11 +55,11 @@ const deleteFile = (filename) => {
         }
         else if (data) {
             console.log(data + " data from service fileRoutes")
-            // console.log(`file at ${data.Location} has been deleted`);
-            // return res.json({
-            //     success: true,
-            //     mes: `file at ${data.Location} has been deleted`
-            // })
+            console.log(`file at ${data} has been deleted`);
+            return res.json({
+                success: true,
+                mes: `file has been deleted`
+            })
         }
     })
 

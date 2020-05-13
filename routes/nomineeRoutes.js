@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require("jsonwebtoken");
-const Nominee = require('../database/models/nominee')
+const Nominee = require('../database/models/nominee');
+const User = require('../database/models/user')
 const cors = require('cors')
 const bodyParser = require('body-parser');
 const auth = require("../service/auth");
@@ -12,7 +13,7 @@ router.post("/submit", auth, (req, res) => {
     console.log("post route for nominee ok")
     console.log(req)
 
-    const { role, name, contact, email, responsibility } = req.fields;
+    const { role, name, contact, email, responsibility, userID } = req.fields;
 
     jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
 
@@ -25,8 +26,12 @@ router.post("/submit", auth, (req, res) => {
                 name: name,
                 contact: contact,
                 email: email,
-                responsibility: responsibility
-            }).then(dbNominee => {
+                responsibility: responsibility,
+                userID: userID
+            })
+            // .then(({ _id }) => User.findOneAndUpdate({ _id: userID }, { $push: { nominees: _id } }, { new: true }))
+            
+            .then(dbNominee => {
                 console.log(dbNominee)
                 return res.json({
                     success: true,
@@ -56,8 +61,8 @@ router.post("/submit", auth, (req, res) => {
 
 })
 
-router.get("/list", (req, res) => {
-    Nominee.find({})
+router.get("/list/:id", (req, res) => {
+    Nominee.find({userID: req.params.id})
         .then(dbNominee => {
             // console.log(dbNominee)
             res.json(dbNominee);

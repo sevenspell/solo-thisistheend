@@ -8,7 +8,8 @@ const fileSchema = new Schema({
 
   filename: { type: String, unique: true, required: true },
   fileCategory: { type: String, unique: false, required: true },
-  fileNomineeTags: { type: String, unique: false, required: false }
+  fileNomineeTags: { type: String, unique: false, required: false },
+  userID: { type: String, unique: true, required: true}
 })
 
 

@@ -1,11 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const jwt = require("jsonwebtoken");
-const User = require('../database/models/user')
-const passport = require('../passport')
-var bcrypt = require('bcryptjs')
-const auth = require("../service/auth");
-const cors = require('cors')
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const User = require('../database/models/user');
+const passport = require('../passport');
+var bcrypt = require('bcryptjs');
+const auth = require('../service/auth');
+const cors = require('cors');
 require('dotenv').config();
 
 router.use(cors());
@@ -18,10 +18,9 @@ router.post('/signup', (req, res) => {
   const { username, email, password } = req.body
 
   // ADD VALIDATION
-
   if (!username || !email || !password) {
     res.status(400).json({
-      message: "Please enter all fields."
+      message: 'Please enter all fields.'
     })
   } else {
     User.findOne({
@@ -41,8 +40,8 @@ router.post('/signup', (req, res) => {
           password: password
         })
         newUser.save((err, user) => {
-          if (err) return res.json({err: err, msg: "signup is not working" })
-          console.log("user account created")
+          if (err) return res.json({err: err, msg: 'signup is not working' })
+          console.log('user account created')
           //jwt payload
           jwt.sign(
             { id: user.id },
@@ -58,7 +57,7 @@ router.post('/signup', (req, res) => {
                   username: user.username,
                   email: user.email,
                   success: true,
-                  mes: "user account created"
+                  mes: 'user account created'
                 }
               })
             }
@@ -82,9 +81,9 @@ router.post(
     const { email, password } = req.body
 
     if (!email || !password) {
-      console.log("Please enter all fields.")
+      console.log('Please enter all fields.')
       res.status(400).json({
-        message: "Please enter all fields."
+        message: 'Please enter all fields.'
       })
 
     } else {
@@ -95,7 +94,7 @@ router.post(
       //   email: req.user.email,
       //   username: req.user.username,
       //   success: true,
-      //   mes: "user successfully logged in"
+      //   mes: 'user successfully logged in'
       // };
 
       //jwt payload
@@ -113,19 +112,16 @@ router.post(
               username: req.user.username,
               email: req.user.email,
               success: true,
-              mes: "user successfully logged in"
+              mes: 'user successfully logged in'
             }
           })
         }
       )
-
-      // res.send(userInfo);
-
     }
   }
 )
 
-router.get("/account/:id", auth, (req, res) => {
+router.get('/account/:id', auth, (req, res) => {
   
   console.log(req.token)
   jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
@@ -134,101 +130,51 @@ router.get("/account/:id", auth, (req, res) => {
       return;
     } else {
       User.findById(req.params.id)
-        .select("-password")
+        .select('-password')
         .then(user => {
           res.send({
             user: user,
             authData: authData,
-            message: "user found",
+            message: 'user found',
             success: true
           })
         })
-        // .catch(err => {
-        //   if (err) {
-        //     res.sendStatis(418);
-        //     return
-        //   }
-        // })
     }
   })
 })
 
-// router.get(
-//   '/login',
-//   passport.authenticate('local'),
-//   (req, res) => {
-//     console.log('logged in', req.user);
-//     var userInfo = {
-//       id: req.user._id,
-//       email: req.user.email,
-//       success: true,
-//       mes: "user successfully logged in"
-//     };
-//     res.send(userInfo);
-//   }
-// )
+// Route for editing myAccount username and password - to be set up later
 
-// router.get('/', (req, res, next) => {
-//     console.log('===== user!!======')
-//     console.log(req.user)
-//     if (req.user) {
-//         res.json({ user: req.user })
-//         res.redirect('/gameover')
-//     } else {
-//         res.json({ user: null })
-//     }
-// })
+// router.post('/account', function (req, res) {
 
-
-
-
-// Route for getting some data about our user to be used client side
-// router.get('/account', (req, res) => {
-//   if (!req.user) {
-//     // The user is not logged in, send back an empty object
-//     res.json({})
-//   } else {
-//     // Otherwise send back the user's username and id
-//     // Sending back a password, even a hashed password, isn't a good idea
-//     res.json({
-//       username: req.user.username,
-//       id: req.user.id,
-//       email: req.user.email,
-
+//   var hashedpassword = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+//   email = req.body.email.toLowerCase();
+//   User.update({
+//     email: email,
+//     password: hashedpassword
+//   },
+//     {
+//       where: {
+//         username: req.user.username
+//       }
 //     })
-//   }
-// })
-
-router.post('/account', function (req, res) {
-
-  var hashedpassword = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-  email = req.body.email.toLowerCase();
-  User.update({
-    email: email,
-    password: hashedpassword
-  },
-    {
-      where: {
-        username: req.user.username
-      }
-    })
-    .then(function (data) {
-      // var object = {
-      //   users: data
-      // }
-      res.json({ user: data })
-    })
-    .catch(function (err) {
-      console.log(err)
-    })
-});
+//     .then(function (data) {
+//       // var object = {
+//       //   users: data
+//       // }
+//       res.json({ user: data })
+//     })
+//     .catch(function (err) {
+//       console.log(err)
+//     })
+// });
 
 
 
 router.get('/logout', (req, res) => {
   if (req.user) {
     req.logout();
-    console.log("logout successful")
+    console.log('logout successful')
     res.send({
       success: true,
       msg: 'logging out'

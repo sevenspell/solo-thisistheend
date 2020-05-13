@@ -43,21 +43,6 @@ router.post('/upload', auth, function (req, res) {
         }
     })
 
-    // File.create({
-    //     filename: filename,
-    //     fileCategory: fileCategory,
-    //     fileNomineeTags: fileNomineeTags
-    // }).then(dbFile => {
-    //     console.log(dbFile)
-    //     return res.json({
-    //         success: true,
-    //         mes: "file entry created"
-    //     })
-    // }).catch(err => {
-    //     console.log(err)
-    //     if (err) return res.json(err);
-    // })
-
 })
 
 router.get('/upload', auth, function (req, res) {
@@ -96,17 +81,12 @@ router.delete("/delete", auth, function (req, res) {
             File.findOneAndRemove({ _id: req.query.id })
             .then(dbFile => {
             
-                console.log("file deleted from mongodb!")
+                console.log(dbFile + "file deleted from mongodb!")
                 res.json(dbFile);
             })
         }
     })
 
-    // File.findOneAndRemove({ _id: req.query.id }, function (err, dbFile) {
-    //     if (err) res.status(400).json(err);
-    //     console.log("nominee deleted!")
-    //     res.json(dbFile);
-    // });
 });
 
 

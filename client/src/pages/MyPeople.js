@@ -39,7 +39,7 @@ function MyPeople() {
         const getLoggedIn = localStorage.getItem('loggedIn')
 
 
-        axios.get("/api/nominees/list", {
+        axios.get("/api/nominees/list/" + getUserid, {
             headers: {
                 'accept': 'application/json',
                 'Authorization': `Bearer ${getToken}`
@@ -82,6 +82,7 @@ function MyPeople() {
     const onClickHandler = (e) => {
         e.preventDefault();
         console.log(responsibility)
+        const getUserid = localStorage.getItem('userId')
         const formData = new FormData();
 
         formData.append("role", role);
@@ -89,6 +90,7 @@ function MyPeople() {
         formData.append("contact", contact);
         formData.append("email", email);
         formData.append("responsibility", responsibility);
+        formData.append("userID", getUserid)
         // formData.append("token", localStorage.getItem('token'))
 
         const token = localStorage.getItem('token')
@@ -117,8 +119,16 @@ function MyPeople() {
 
     // get list of nominees in database for display
     function getList(){
+
+        const getToken = localStorage.getItem('token');
+        const getUserid = localStorage.getItem('userId')
      
-        axios.get("/api/nominees/list")
+        axios.get("/api/nominees/list/" + getUserid, {
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${getToken}`
+            }
+        })
         .then(function (response) {
             const listArray = response.data;
             setList(listArray)
