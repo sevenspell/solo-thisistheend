@@ -11,7 +11,7 @@ const nomineeSchema = new Schema({
   contact: { type: String, unique: false, required: true },
   email: { type: String, unique: false, required: true},
   responsibility: { type: String, unique: false, required: false },
-  userID: { type: String, unique: true, required: true}
+  userID: { type: String, unique: false, required: true}
 
 })
 

@@ -4,14 +4,16 @@ const AWS = require('aws-sdk');
 const path = require("path");
 require('dotenv').config();
 const fs = require('fs');
+
+// AWS S3 secret key setup (actual keys stored in .env that does not get uploaded to github/heroku)
 const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: 'ap-southeast-2'
 });
 
-
-const uploadFile = (pathname, filename, res) => {
+// create upload file to AWS S3 function
+const uploadFile = (pathname, filename, userID, res) => {
 
     // Read content from the file
     let fileContent = fs.readFileSync(path.resolve(pathname));
@@ -19,9 +21,9 @@ const uploadFile = (pathname, filename, res) => {
     // Setting up S3 upload parameters
     const params = {
         Bucket: 'thisistheend',
-        Key: filename, // File name you want to save as in S3
+        Key: userID+filename, // File name you want to save as in S3
         Body: fileContent,
-        acl: 'public-read'
+        acl: 'authenticated-read'
     };
 
     // Uploading files to the bucket
@@ -39,16 +41,16 @@ const uploadFile = (pathname, filename, res) => {
     });
 };
 
-// https://thisistheend.s3-ap-southeast-2.amazonaws.com/cat.txt
-
+// create delete file in AWS S3 function
 const deleteFile = (filename) => {
 
+     // Setting up S3 upload parameters
     const params = {
         Bucket: 'thisistheend',
         Key: filename,
-
     }
 
+    // Deleting files in the bucket
     s3.deleteObject(params, function(err, data){
         if (err) {
            console.log(err)
@@ -56,49 +58,15 @@ const deleteFile = (filename) => {
         else if (data) {
             console.log(data + " data from service fileRoutes")
             console.log(`file at ${data} has been deleted`);
-            return res.json({
-                success: true,
-                mes: `file has been deleted`
-            })
+            // return res.json({
+            //     success: true,
+            //     mes: `file has been deleted`
+            // })
         }
     })
 
 }
 
-
-// AWS.config.update({
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//     region: 'ap-southeast-2'
-// })
-
-// const fileFilter = (req, file, cb) => {
-//     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'application/msword' || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.mimetype === 'application/pdf' || file.mimetype === 'application/vnd.ms-excel' || file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.mimetype === '	application/zip') {
-//         cb(null, true)
-//     } else {
-//         cb(new Error('invalid file type, please upload in the following format: .jpg, .png, .doc, .docx, .pdf, .xls, .xlsx, .zip'), false)
-//     }
-// }
-
-// const upload = multer({
-//     fileFilter: fileFilter,
-//     storage: multerS3({
-//         s3: s3,
-//         bucket: 'thisistheend',
-//         acl: 'public-read',
-//         contentType: multerS3.AUTO_CONTENT_TYPE,
-//         // metadata: function (req, file, cb) {
-//         //     cb(null, { fieldName: file.fieldname });
-//         // },
-//         key: function (req, file, cb) {
-//             cb(null, Date.now().toString())
-//         },
-//         // body: function (req, file, cb) {
-//         //     cb(null, fs.readFileSync(path.join(__dirname, file), "utf8"))
-//         // }
-
-//     })
-// })
 
 
 module.exports = {

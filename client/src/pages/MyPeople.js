@@ -7,10 +7,10 @@ import axios from "axios"
 
 function MyPeople() {
 
-    // for page redirect
+    // declare variable for later page redirects
     const history = useHistory();
 
-    // useRef
+    // declare useRef
     var formRef = useRef();
     var roleRef = useRef();
     var nameRef = useRef();
@@ -19,11 +19,10 @@ function MyPeople() {
     var responsibilityRef = useRef();
     var listRef = useRef();
 
-    // useContext
-    const [ user, setUser ] = useState()
+    // declare useContext
 	const [ state, dispatch ] = useUserContext();
 
-    // useState
+    // declare useState
     const [role, setRole] = useState();
     const [name, setName] = useState();
     const [contact, setContact] = useState();
@@ -36,26 +35,26 @@ function MyPeople() {
 
         const getToken = localStorage.getItem('token');
         const getUserid = localStorage.getItem('userId')
-        const getLoggedIn = localStorage.getItem('loggedIn')
 
+        // use axios to render list of nominees in the database based on userID
+        getList();
+        // axios.get("/api/nominees/list/" + getUserid, {
+        //     headers: {
+        //         'accept': 'application/json',
+        //         'Authorization': `Bearer ${getToken}`
+        //     }
+        // })
+        // .then(function (response) {
+        //     console.log(response.data);
+        //     const listArray = response.data;
+        //     setList(listArray)
 
-        axios.get("/api/nominees/list/" + getUserid, {
-            headers: {
-                'accept': 'application/json',
-                'Authorization': `Bearer ${getToken}`
-            }
-        })
-        .then(function (response) {
-            console.log(response.data);
-            // dispatch({type:"logged in", username: response.data.user.username})
-            const listArray = response.data;
-            setList(listArray)
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
 
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-
+        //
         axios.get("/api/users/account/" + getUserid, {
             headers: {
                 'accept': 'application/json',
@@ -91,11 +90,10 @@ function MyPeople() {
         formData.append("email", email);
         formData.append("responsibility", responsibility);
         formData.append("userID", getUserid)
-        // formData.append("token", localStorage.getItem('token'))
+
 
         const token = localStorage.getItem('token')
     
-        // const token = localStorage.getItem('token')
         axios.post("/api/nominees/submit", formData, {
             
             headers: {

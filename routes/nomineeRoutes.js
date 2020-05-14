@@ -11,7 +11,7 @@ router.use(cors());
 
 router.post("/submit", auth, (req, res) => {
     console.log("post route for nominee ok")
-    console.log(req)
+    console.log(req.fields)
 
     const { role, name, contact, email, responsibility, userID } = req.fields;
 
@@ -21,6 +21,7 @@ router.post("/submit", auth, (req, res) => {
             res.sendStatus(418)
             return;
         } else {
+            console.log("nominee entry created for " + userID)
             Nominee.create({
                 role: role,
                 name: name,

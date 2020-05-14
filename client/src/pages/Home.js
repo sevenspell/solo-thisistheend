@@ -11,23 +11,27 @@ function Home() {
 
 	const history = useHistory();
 
-	const [ state, dispatch ] = useUserContext();
+	const [state, dispatch] = useUserContext();
 
-	const [ user, setUser ] = useState({});
-	const [ username, setUsername ] = useState("");
+	const [user, setUser] = useState({});
+	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	useEffect(() => {
 
-        const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
-        const getLoggedIn = localStorage.getItem('loggedIn')
-        const getUsername = localStorage.getItem('username')
+		const getToken = localStorage.getItem('token');
+		const getUserid = localStorage.getItem('userId')
+		const getLoggedIn = localStorage.getItem('loggedIn')
+		const getUsername = localStorage.getItem('username')
 
-        // axios.get using userid and token from localstorage, backend use id to verify against mongoose id + token (middle)
+		// axios.get using userid and token from localstorage, backend use id to verify against mongoose id + token (middle)
 
-		if (getUserid){
+		if (!getUserid) {
+			console.log("no userid exists")
+			return;
+		} 
+		if (getUserid) {
 			console.log("userid exists")
 			axios.get("/api/users/account/" + getUserid, {
 				headers: {
@@ -36,24 +40,21 @@ function Home() {
 				}
 			}).then((res, err) => { // then print response status
 				if (err) throw (err)
-	
+
 				if (res.data.success) {
 					console.log(res.data.user.username)
 					console.log("get userlogin status is successful")
 					setUsername(getUsername)
-					dispatch({type:"logged in", username: res.data.user.username})
+					dispatch({ type: "logged in", username: res.data.user.username })
 				}
 			}).catch(err => {
 				if (err) throw err;
 				console.log(err)
 			})
-		} else {
-			console.log("no userid exists")
-			return;
 		}
 
 
-    }, [])
+	}, [])
 
 
 	const submitForm = e => {
@@ -65,7 +66,7 @@ function Home() {
 		}).then((res) => {
 			console.log(res)
 			if (res.data.user.success) {
-	
+
 				setUser(res.data.user)
 				history.push("/mypeople");
 				console.log(res.data.user)
@@ -77,7 +78,7 @@ function Home() {
 				localStorage.setItem('userId', res.data.user.id)
 				localStorage.setItem('loggedIn', true)
 				localStorage.setItem('username', res.data.user.username)
-				dispatch({type:"logged in", username: res.data.user.username})
+				dispatch({ type: "logged in", username: res.data.user.username })
 			}
 		})
 	}
@@ -119,28 +120,28 @@ function Home() {
 				!state.username
 					?
 					<div id="loginContainer">
-					<h5 id="loginformheader">Please login to proceed</h5>
-					<form id="loginform" onSubmit={submitForm}>
-						<label id="emaillabel">Email:</label>
-						<input
-							onChange={(e) => setEmail(e.target.value)}
-							type="text"
-							placeholder="Enter your login email"
-							className="forminput"
-						/>
-						<br />
-						<label id="passwordlabel">Password:</label>
-						<input
-							onChange={(e) => setPassword(e.target.value)}
-							type="password"
-							placeholder="Enter your password"
-							className="forminput"
-						/>
-						<br />
-						<button type="submit" id="loginbtn">Login <i className="fa fa-sign-in" id="loginlogo" aria-hidden="true"></i></button>
-					</form>
-					<p id="signuplink">If you do not have an account, click <a href="/signup">here</a> to create one.</p>
-				</div>
+						<h5 id="loginformheader">Please login to proceed</h5>
+						<form id="loginform" onSubmit={submitForm}>
+							<label id="emaillabel">Email:</label>
+							<input
+								onChange={(e) => setEmail(e.target.value)}
+								type="text"
+								placeholder="Enter your login email"
+								className="forminput"
+							/>
+							<br />
+							<label id="passwordlabel">Password:</label>
+							<input
+								onChange={(e) => setPassword(e.target.value)}
+								type="password"
+								placeholder="Enter your password"
+								className="forminput"
+							/>
+							<br />
+							<button type="submit" id="loginbtn">Login <i className="fa fa-sign-in" id="loginlogo" aria-hidden="true"></i></button>
+						</form>
+						<p id="signuplink">If you do not have an account, click <a href="/signup">here</a> to create one.</p>
+					</div>
 					:
 					<div></div>
 			}

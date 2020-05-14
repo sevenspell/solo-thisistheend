@@ -9,36 +9,37 @@ import axios from "axios"
 
 function GameOver() {
 
+    // declare for page redirects
     const history = useHistory();
 
+    // declare useRef
     var uploadRef = useRef();
     var fileFormRef = useRef();
     var listRef = useRef();
 
-    // useContext
+    // declare useContext
     // const [ user, setUser ] = useState()
     const [state, dispatch] = useUserContext();
+
+    // declare useState
     const [file, setFile] = useState();
     const [fileCategory, setFileCategory] = useState();
     const [filename, setFilename] = useState();
-    // const [filelist, setFilelist] = useState();
-    // const [token, setToken] = useState();
     const [list, setList] = useState([]);
 
+    // run init functions when page loads or reloads
     useEffect(() => {
 
         const getToken = localStorage.getItem('token');
         const getUserid = localStorage.getItem('userId')
-        const getLoggedIn = localStorage.getItem('loggedIn')
 
-        // axios.get using userid and token from localstorage, backend use id to verify against mongoose id + token (middle)
-
+        // get user details using logged in userID and jwt
         axios.get("/api/users/account/" + getUserid, {
             headers: {
                 'accept': 'application/json',
                 'Authorization': `Bearer ${getToken}`
             }
-        }).then((res, err) => { // then print response status
+        }).then((res, err) => {
             if (err) throw (err)
 
             if (res.data.success) {
@@ -48,27 +49,12 @@ function GameOver() {
             }
         })
 
+        // get list of files in database and display
         getStorageData()
-
-        // axios.get("/api/upload", {
-        //     headers: {
-        //         'accept': 'application/json',
-        //         'Authorization': `Bearer ${getToken}`
-        //     }
-        // })
-        //     .then(function (response) {
-        //         console.log(response.data);
-        //         // dispatch({type:"logged in", username: response.data.user.username})
-        //         const listArray = response.data;
-        //         setList(listArray)
-
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
 
     }, [])
 
+    // create function for drag and drop
     const onDrop = useCallback(acceptedFiles => {
 
         console.log(acceptedFiles[0])
@@ -77,39 +63,43 @@ function GameOver() {
 
     }, [file])
 
-
-
+    // declare functions from React-Dropzone
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+    // create function to point link towards actual "open browser" function
     const openBrowser = () => {
         uploadRef.click();
     }
 
+    // declare function to capture filename
     const onChangeHandler = (e) => {
         console.log(e.target.files[0].name);
         setFile(e.target.files[0])
         setFilename(e.target.files[0].name)
     }
 
+    // declare function to capture file category setting
     const fileCategoryChange = (e) => {
         setFileCategory(e.target.value)
     }
 
-    // Upload file function
+    // declare function to upload file 
     const onClickHandler = (e) => {
         e.preventDefault();
 
+        // get data from local storage
+        const getUserid = localStorage.getItem('userId')
+        const getToken = localStorage.getItem('token');
         const formData = new FormData();
 
+        // append data to be sent to backend
         formData.append("file", file, filename);
-        formData.append("fileCategory", fileCategory)
+        formData.append("fileCategory", fileCategory);
+        formData.append("userID", getUserid);
 
-        const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
-        const getLoggedIn = localStorage.getItem('loggedIn')
-
+        // create axios post to post to backend route
         axios.post("/api/upload", formData, {
-            // receive two parameter endpoint url ,form data
+
             headers: {
                 'accept': 'application/json',
                 'Accept-Language': 'en-US,en;q=0.8',
@@ -128,19 +118,19 @@ function GameOver() {
         })
     }
 
+    // create function to reset fields in the form
     function resetFields() {
         fileFormRef.reset();
         setFilename("")
     }
 
-
-
+    // create function to get list of files in database for display
     const getStorageData = () => {
         const getToken = localStorage.getItem('token');
         const getUserid = localStorage.getItem('userId')
-        const getLoggedIn = localStorage.getItem('loggedIn')
 
-        axios.get('/api/upload', {
+        // create axios function to get data from backend route
+        axios.get('/api/upload/' + getUserid, {
             headers: {
                 'accept': 'application/json',
                 'Authorization': `Bearer ${getToken}`
@@ -157,28 +147,31 @@ function GameOver() {
             });
     }
 
-    function deleteFile({_id:_id, filename: filename}) {
+    // create function to delete file
+    function deleteFile({ _id: _id, filename: filename }) {
         const getToken = localStorage.getItem('token');
-        console.log(filename)
-        console.log(_id)
-        axios.delete("/api/delete", { 
+        const getUserid = localStorage.getItem('userId')
+
+        axios.delete("/api/delete", {
             headers: {
                 'accept': 'application/json',
                 'Authorization': `Bearer ${getToken}`
             },
-            params: { 
+            params: {
                 filename: filename,
-                id: _id  }
+                id: _id,
+                userID: getUserid
+            }
         })
-        .then(function (response) {
-            console.log(response)
-            getStorageData();
-            resetFields();
-            history.push("/gameover");
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                console.log(response)
+                getStorageData();
+                resetFields();
+                history.push("/gameover");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return (
@@ -195,7 +188,7 @@ function GameOver() {
                                 <h5 className="card-title cardCategory">{fileCategory}</h5>
                                 <p className="card-text">Nominee Tags</p>
                                 <button className="deletebtn1"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                <button onClick={()=>deleteFile({_id:_id, filename: filename})} className="deletebtn1"><i className="fa fa-trash" aria-hidden="true"></i></button>
+                                <button onClick={() => deleteFile({ _id: _id, filename: filename })} className="deletebtn1"><i className="fa fa-trash" aria-hidden="true"></i></button>
                             </div>
                         </div>
 
