@@ -2,9 +2,9 @@ import React, { useRef, useState, useCallback, useEffect, useContext } from "rea
 import { useHistory } from 'react-router';
 import { useDropzone } from "react-dropzone";
 import Subheader from "../components/Subheader/Subheader";
-import { UserProvider, useUserContext } from "../utils/userLoginContext"
+import { UserProvider, useUserContext } from "../utils/userLoginContext";
 import "./GameOver.css";
-import axios from "axios"
+import axios from "axios";
 
 
 function GameOver() {
@@ -18,7 +18,6 @@ function GameOver() {
     var listRef = useRef();
 
     // declare useContext
-    // const [ user, setUser ] = useState()
     const [state, dispatch] = useUserContext();
 
     // declare useState
@@ -31,9 +30,9 @@ function GameOver() {
     useEffect(() => {
 
         const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
+        const getUserid = localStorage.getItem('userId');
 
-        // get user details using logged in userID and jwt
+        // get user details using logged in userID and jwt for authentication
         axios.get("/api/users/account/" + getUserid, {
             headers: {
                 'accept': 'application/json',
@@ -43,25 +42,24 @@ function GameOver() {
             if (err) throw (err)
 
             if (res.data.success) {
-                console.log("get userlogin status is successful")
-                dispatch({ type: "logged in", username: res.data.user.username })
+                console.log("getting userlogin status is successful");
+                dispatch({ type: "logged in", username: res.data.user.username });
                 history.push("/gameover");
             }
         })
 
         // get list of files in database and display
-        getStorageData()
+        getStorageData();
 
     }, [])
 
     // create function for drag and drop
     const onDrop = useCallback(acceptedFiles => {
 
-        console.log(acceptedFiles[0])
         setFile(acceptedFiles[0])
         setFilename(acceptedFiles[0].name)
 
-    }, [file])
+    }, [file]);
 
     // declare functions from React-Dropzone
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -73,14 +71,14 @@ function GameOver() {
 
     // declare function to capture filename
     const onChangeHandler = (e) => {
-        console.log(e.target.files[0].name);
-        setFile(e.target.files[0])
-        setFilename(e.target.files[0].name)
+
+        setFile(e.target.files[0]);
+        setFilename(e.target.files[0].name);
     }
 
     // declare function to capture file category setting
     const fileCategoryChange = (e) => {
-        setFileCategory(e.target.value)
+        setFileCategory(e.target.value);
     }
 
     // declare function to upload file 
@@ -88,7 +86,7 @@ function GameOver() {
         e.preventDefault();
 
         // get data from local storage
-        const getUserid = localStorage.getItem('userId')
+        const getUserid = localStorage.getItem('userId');
         const getToken = localStorage.getItem('token');
         const formData = new FormData();
 
@@ -110,7 +108,7 @@ function GameOver() {
             if (err) throw (err)
             console.log(res)
             if (res.data.success) {
-                console.log("file upload is successful")
+                console.log("file upload is successful");
                 resetFields();
                 getStorageData();
                 history.push("/gameover");
@@ -121,13 +119,13 @@ function GameOver() {
     // create function to reset fields in the form
     function resetFields() {
         fileFormRef.reset();
-        setFilename("")
+        setFilename("");
     }
 
     // create function to get list of files in database for display
     const getStorageData = () => {
         const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
+        const getUserid = localStorage.getItem('userId');
 
         // create axios function to get data from backend route
         axios.get('/api/upload/' + getUserid, {
@@ -139,7 +137,7 @@ function GameOver() {
             .then(function (response) {
                 console.log(response);
                 const listArray = response.data;
-                setList(listArray)
+                setList(listArray);
 
             })
             .catch(function (error) {
@@ -150,7 +148,7 @@ function GameOver() {
     // create function to delete file
     function deleteFile({ _id: _id, filename: filename }) {
         const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
+        const getUserid = localStorage.getItem('userId');
 
         axios.delete("/api/delete", {
             headers: {
@@ -164,7 +162,7 @@ function GameOver() {
             }
         })
             .then(function (response) {
-                console.log(response)
+
                 getStorageData();
                 resetFields();
                 history.push("/gameover");

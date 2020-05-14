@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router';
 import Subsubheader from "../components/Subsubheader/Subsubheader";
-import { UserProvider, useUserContext } from "../utils/userLoginContext"
+import { UserProvider, useUserContext } from "../utils/userLoginContext";
 import "./Account.css";
-import axios from "axios"
+import axios from "axios";
 
 function Account() {
 
@@ -25,8 +25,7 @@ function Account() {
     useEffect(() => {
 
         const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
-        const getLoggedIn = localStorage.getItem('loggedIn')
+        const getUserid = localStorage.getItem('userId');
 
         axios.get("/api/users/account/" + getUserid, {
             headers: {
@@ -35,12 +34,12 @@ function Account() {
             }
         }).then(function (res, err) {
                 if (err) throw err;
-                console.log("get userlogin status is successful")
-                dispatch({type:"logged in", username: res.data.user.username})
+                console.log("getting userlogin status is successful");
+                dispatch({type:"logged in", username: res.data.user.username});
                 const accountData = res.data;
-                setUser(accountData)
+                setUser(accountData);
                 setUsername(res.data.user.username);
-                setEmail(res.data.user.email)
+                setEmail(res.data.user.email);
             })
             .catch(function (error) {
                 console.log(error);
@@ -56,11 +55,9 @@ function Account() {
             <div className="wrapperaccount">
                 <h5 id="accountHeader">Account Details</h5>
                 <div className="container" id="accountContainer">
-                    {/* <ul className="list-group"> */}
                     <p className="accountItem" id="accountUsername">Username: <span className="accountValue">{username}</span> <button type="button" className="btn accountChangeBtn">Change Username</button></p>
                     <p className="accountItem" id="accountEmail">Email: <span className="accountValue">{email}</span></p>
                     <p className="accountItem" id="accountPassword">Password: <button type="button" className="btn accountChangeBtn">Change Password</button></p>
-                    {/* </ul> */}
                     <br />
                     <br />
                 </div>

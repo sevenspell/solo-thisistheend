@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useHistory } from 'react-router';
 import Subheader from "../components/Subheader/Subheader";
-import { UserProvider, useUserContext } from "../utils/userLoginContext"
+import { useUserContext } from "../utils/userLoginContext";
 import "./MyPeople.css";
-import axios from "axios"
+import axios from "axios";
 
 function MyPeople() {
 
@@ -20,7 +20,7 @@ function MyPeople() {
     var listRef = useRef();
 
     // declare useContext
-	const [ state, dispatch ] = useUserContext();
+    const [state, dispatch] = useUserContext();
 
     // declare useState
     const [role, setRole] = useState();
@@ -34,27 +34,12 @@ function MyPeople() {
     useEffect(() => {
 
         const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
+        const getUserid = localStorage.getItem('userId');
 
-        // use axios to render list of nominees in the database based on userID
+        // get list of nominees in the database based on userID
         getList();
-        // axios.get("/api/nominees/list/" + getUserid, {
-        //     headers: {
-        //         'accept': 'application/json',
-        //         'Authorization': `Bearer ${getToken}`
-        //     }
-        // })
-        // .then(function (response) {
-        //     console.log(response.data);
-        //     const listArray = response.data;
-        //     setList(listArray)
 
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-
-        //
+        // get user details using logged in userID and jwt for authentication
         axios.get("/api/users/account/" + getUserid, {
             headers: {
                 'accept': 'application/json',
@@ -65,12 +50,11 @@ function MyPeople() {
 
             if (res.data.success) {
                 console.log("get userlogin status is successful")
-                dispatch({type:"logged in", username: res.data.user.username})
-                
+                dispatch({ type: "logged in", username: res.data.user.username })
             }
         })
 
-    }, [])
+    }, []);
 
     //change all input to uppercase
     const toInputUppercase = e => {
@@ -80,8 +64,7 @@ function MyPeople() {
     //submit nominee entry
     const onClickHandler = (e) => {
         e.preventDefault();
-        console.log(responsibility)
-        const getUserid = localStorage.getItem('userId')
+        const getUserid = localStorage.getItem('userId');
         const formData = new FormData();
 
         formData.append("role", role);
@@ -89,13 +72,13 @@ function MyPeople() {
         formData.append("contact", contact);
         formData.append("email", email);
         formData.append("responsibility", responsibility);
-        formData.append("userID", getUserid)
+        formData.append("userID", getUserid);
 
 
-        const token = localStorage.getItem('token')
-    
+        const token = localStorage.getItem('token');
+
         axios.post("/api/nominees/submit", formData, {
-            
+
             headers: {
                 'accept': 'application/json',
                 'Accept-Language': 'en-US,en;q=0.8',
@@ -107,7 +90,7 @@ function MyPeople() {
 
             if (res.data.success) {
                 console.log("nominee entry is successful")
-   
+
                 getList();
                 resetFields();
                 history.push("/mypeople");
@@ -116,46 +99,55 @@ function MyPeople() {
     }
 
     // get list of nominees in database for display
-    function getList(){
+    function getList() {
 
         const getToken = localStorage.getItem('token');
-        const getUserid = localStorage.getItem('userId')
-     
+        const getUserid = localStorage.getItem('userId');
+
         axios.get("/api/nominees/list/" + getUserid, {
             headers: {
                 'accept': 'application/json',
                 'Authorization': `Bearer ${getToken}`
             }
         })
-        .then(function (response) {
-            const listArray = response.data;
-            setList(listArray)
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                const listArray = response.data;
+                setList(listArray)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     //reset form after each submission
-    function resetFields(){
+    function resetFields() {
         formRef.reset();
-        console.log(role)
     }
-  
+
+    // FOR LATER CREATION OF NOMINEE UPDATE FUNCTION
     // /  `api/nominess/update/{_id}`
-    function deleteNominee(_id){
-        
-        axios.delete("/api/nominees/delete", { params: { id: _id }})
-        .then(function (response) {
-            console.log(response)
-            getList();
-            resetFields();
-            history.push("/mypeople");
+
+
+    // create Nominee delete function
+    function deleteNominee(_id) {
+        const getToken = localStorage.getItem('token');
+        axios.delete("/api/nominees/delete/" + _id, {
+            // { params: { id: _id }}
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${getToken}`
+            }
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                getList();
+                resetFields();
+                history.push("/mypeople");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
+
 
     return (
         <div>
@@ -164,8 +156,8 @@ function MyPeople() {
                 <h5 id="nomineeListHeader">Your Nomination List</h5>
                 <div className="container w">
                     <ul className="list-group">
-                        {list.map(({role, name, contact, responsibility, email, _id}) => (
-                            <li key={_id} ref={ref => listRef = ref} className="list-group-item listDesign"> 
+                        {list.map(({ role, name, contact, responsibility, email, _id }) => (
+                            <li key={_id} ref={ref => listRef = ref} className="list-group-item listDesign">
                                 <p className="nomineeItem">My {role} is {name}. Their responsibility is {responsibility}.
                                 </p>
                                 <button onClick={() => deleteNominee(_id)} className="deletebtn"><i className="fa fa-trash" aria-hidden="true"></i></button>
@@ -203,7 +195,7 @@ function MyPeople() {
                         <div className="form-group">
                             <label className="formLabel">Email:</label>
                             <input ref={ref => emailRef = ref} onChange={(e) => setEmail(e.target.value)} onInput={toInputUppercase} type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
-                            
+
                         </div>
                         <div className="form-group">
                             <label className="formLabel">Responsibilities:</label>

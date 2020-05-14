@@ -9,9 +9,8 @@ const auth = require("../service/auth");
 router.use(bodyParser.json());
 router.use(cors());
 
+// post Nominee entry to mongoDB
 router.post("/submit", auth, (req, res) => {
-    console.log("post route for nominee ok")
-    console.log(req.fields)
 
     const { role, name, contact, email, responsibility, userID } = req.fields;
 
@@ -62,38 +61,66 @@ router.post("/submit", auth, (req, res) => {
 
 })
 
-router.get("/list/:id", (req, res) => {
-    Nominee.find({userID: req.params.id})
-        .then(dbNominee => {
-            // console.log(dbNominee)
-            res.json(dbNominee);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-})
+router.get("/list/:id", auth, (req, res) => {
 
-router.put("/update/:id", function (req, res) {
-    console.log("update route is ok for " + req.params.id)
+    jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
 
-    Nominee.findOneAndUpdate({ _id: req.params.id }, function (err, dbNominee) {
-        if (err) res.status(400).json(err);
-        console.log("nominee deleted!")
-        res.json(dbNominee);
-
+        if (err) {
+            res.sendStatus(418)
+            return;
+        } else {
+            Nominee.find({userID: req.params.id})
+            .then(dbNominee => {
+                res.json(dbNominee);
+            })
+        }
     })
 
+    // Nominee.find({userID: req.params.id})
+    //     .then(dbNominee => {
+    //         res.json(dbNominee);
+    //     })
+    //     .catch(err => {
+    //         res.json(err);
+    //     });
 })
 
-router.delete("/delete", function (req, res) {
-    // res.send("test for nominee route")
-    console.log("delete route is ok for " + req.query.id)
+// FOR LATER USE TO CREATE UPDATE NOMINEE FUNCTION
 
-    Nominee.findOneAndRemove({ _id: req.query.id }, function (err, dbNominee) {
-        if (err) res.status(400).json(err);
-        console.log("nominee deleted!")
-        res.json(dbNominee);
-    });
+// router.put("/update/:id", function (req, res) {
+//     console.log("update route is ok for " + req.params.id)
+
+//     Nominee.findOneAndUpdate({ _id: req.params.id }, function (err, dbNominee) {
+//         if (err) res.status(400).json(err);
+//         console.log("nominee deleted!")
+//         res.json(dbNominee);
+
+//     })
+
+// })
+
+// Create delete route for Nominee list
+router.delete("/delete/:id", auth, function (req, res) {
+
+    jwt.verify(req.token, process.env.JWT_SECRET, (err, authData) => {
+
+        if (err) {
+            res.sendStatus(418)
+            return;
+        } else {
+            Nominee.findOneAndRemove({ _id: req.params.id }, function (err, dbNominee) {
+                if (err) res.status(400).json(err);
+                console.log("nominee deleted!")
+                res.json(dbNominee);
+            });
+        }
+    })
+
+    // Nominee.findOneAndRemove({ _id: req.query.id }, function (err, dbNominee) {
+    //     if (err) res.status(400).json(err);
+    //     console.log("nominee deleted!")
+    //     res.json(dbNominee);
+    // });
 });
 
 

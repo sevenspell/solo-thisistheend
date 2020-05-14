@@ -1,10 +1,10 @@
 // import React from "react";
 import Header from "../components/Header/Header";
 import "./Home.css";
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import { UserProvider, useUserContext } from "../utils/userLoginContext"
+import { useUserContext } from "../utils/userLoginContext";
 
 
 function Home() {
@@ -21,9 +21,8 @@ function Home() {
 	useEffect(() => {
 
 		const getToken = localStorage.getItem('token');
-		const getUserid = localStorage.getItem('userId')
-		const getLoggedIn = localStorage.getItem('loggedIn')
-		const getUsername = localStorage.getItem('username')
+		const getUserid = localStorage.getItem('userId');
+		const getUsername = localStorage.getItem('username');
 
 		// axios.get using userid and token from localstorage, backend use id to verify against mongoose id + token (middle)
 
@@ -64,21 +63,16 @@ function Home() {
 			email: email,
 			password: password
 		}).then((res) => {
-			console.log(res)
+
 			if (res.data.user.success) {
 
-				setUser(res.data.user)
+				setUser(res.data.user);
 				history.push("/mypeople");
-				console.log(res.data.user)
-				console.log(res.data.user.mes)
-				console.log(res.data.user.id)
-				console.log(res.data.user.username)
-				console.log(res.data.token)
-				localStorage.setItem('token', res.data.token)
-				localStorage.setItem('userId', res.data.user.id)
-				localStorage.setItem('loggedIn', true)
-				localStorage.setItem('username', res.data.user.username)
-				dispatch({ type: "logged in", username: res.data.user.username })
+				localStorage.setItem('token', res.data.token);
+				localStorage.setItem('userId', res.data.user.id);
+				localStorage.setItem('loggedIn', true);
+				localStorage.setItem('username', res.data.user.username);
+				dispatch({ type: "logged in", username: res.data.user.username });
 			}
 		})
 	}
