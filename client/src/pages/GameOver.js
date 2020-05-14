@@ -197,6 +197,7 @@ function GameOver() {
             <div className="wrapperupload">
                 <div className="containerupload">
                     <h3 id="uploadHeader">Upload a file</h3>
+                    <small id="fileuploadHelp" className="form-text text-muted">We'll never share private information with anyone else.</small>
                     <form
                         onSubmit={onClickHandler}
                         id='uploadForm'

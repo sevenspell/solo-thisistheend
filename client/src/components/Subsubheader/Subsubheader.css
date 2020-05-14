@@ -12,10 +12,18 @@
 	#blue2 h4 {
 		color: #606060;
 		font-weight: 500;
+		position: absolute;
+		left: 1%;
+		bottom: 80%;
 	}
 
 	#blue2 p {
 		color: #606060;
+		font-size: 14px;
+		position: relative;
+		left: -36%;
+		top: 30%;
+		margin-bottom: 80px;
 	}
 }
 

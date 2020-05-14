@@ -24,6 +24,10 @@
     text-align: center;
   }
 
+  #fileuploadHelp {
+    margin: 20px;
+  }
+
   .uploadedList{
     font-family: 'Lato', sans-serif;   
     letter-spacing: 0.3px; 

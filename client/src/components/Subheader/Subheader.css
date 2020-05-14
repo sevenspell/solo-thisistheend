@@ -11,11 +11,18 @@
 	#blue1 h4 {
 		color: white;
 		font-weight: 500;
+		position: absolute;
+		left: 1%;
+		bottom: 80%;
 	}
 
 	#blue1 p {
 		color: white;
 		font-size: 14px;
+		position: relative;
+		left: -20%;
+		top: 30%;
+		margin-bottom: 80px;
 	}
 }
 
